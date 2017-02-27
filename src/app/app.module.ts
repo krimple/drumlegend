@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { SynthesizerModule } from './synthesizer';
+
 import { AppComponent } from './app.component';
+import { GameModule } from './game/';
 
 @NgModule({
   declarations: [
@@ -12,7 +15,9 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    SynthesizerModule,
+    GameModule
   ],
   providers: [],
   bootstrap: [AppComponent]
