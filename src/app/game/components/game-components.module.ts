@@ -1,16 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProgressMeterComponent } from './progress-meter/progress-meter.component';
+import { SynthesizerModule } from '../../synthesizer/synthesizer.module';
+import { GameContainerComponent } from './container/game-container.component';
 
 @NgModule({
   declarations: [
-   ProgressMeterComponent
+   ProgressMeterComponent,
+   GameContainerComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SynthesizerModule
   ],
   exports: [
-    ProgressMeterComponent
+    ProgressMeterComponent,
+    GameContainerComponent
   ]
 })
 export class GameComponentsModule { }

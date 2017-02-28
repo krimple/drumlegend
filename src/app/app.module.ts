@@ -7,6 +7,7 @@ import { SynthesizerModule } from './synthesizer';
 
 import { AppComponent } from './app.component';
 import { GameModule } from './game/';
+import { GameComponentsModule } from './game/components/game-components.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { GameModule } from './game/';
     FormsModule,
     HttpModule,
     SynthesizerModule,
-    GameModule
+    GameModule,
+    GameComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,48 +1,34 @@
-import {
-  Component, AfterViewInit, ViewChild,
-  ElementRef, Renderer
-} from '@angular/core';
-
-import { PipelineService } from './synthesizer/services/pipeline/pipeline.service';
-import { SynthNoteMessage, TriggerSample } from './synthesizer/models/synth-note-message';
+import { Component } from '@angular/core';
+import { GamePlayMachine, GamePlayState } from './game/state-machine/game-play-machine';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   template: `
-    <progress-meter 
-      [width]="percentComplete"
-      [height]="50"
-      [backgroundColor]="'blue'"></progress-meter>
-      <p></p>
-     <progress-meter 
-      [width]="percentComplete"
-      [height]="50"
-      [backgroundColor]="'red'"></progress-meter>      
-      <p></p>
-     <progress-meter 
-      [width]="percentComplete"
-      [height]="50"
-      [backgroundColor]="'green'"></progress-meter>  
-  `,
+    <game-container></game-container>
+    <button (click)="setPattern('paradiddle', 'RLRRLRLL')">Set Paradiddle</button>
+    <button (click)="sendStroke('L')">Left</button>
+    <button (click)="sendStroke('R')">Right</button>
+    <h2>Game play state</h2>
+    <pre>{{ gamePlayMachine.gamePlayState | async | json }}</pre>
+ `,
 
 })
-export class AppComponent implements AfterViewInit {
-  percentComplete = 0;
-  constructor(private pipelineService: PipelineService) {
-  }
+export class AppComponent {
 
-  ngAfterViewInit() {
+  gamePlayState: GamePlayState;
+
+  constructor(public gamePlayMachine: GamePlayMachine) {
     const self = this;
-    this.pipelineService.begin();
-    this.pipelineService.synthStream$
-      .filter((message: SynthNoteMessage) =>
-         message instanceof TriggerSample)
-      .subscribe((message: SynthNoteMessage) => {
-        self.percentComplete = self.percentComplete < 100  ? Number(self.percentComplete.valueOf() + 1) : Number(0);
-      });
-
-    setInterval(() => {
-      self.pipelineService.synthStream$.next(new TriggerSample('snare'));
-    }, 500);
   }
+
+  setPattern(name, pattern) {
+    this.gamePlayMachine.setPattern(name, pattern);
+  }
+
+  sendStroke(value: string) {
+    this.gamePlayMachine.sendStroke(value);
+  }
+
 }
+

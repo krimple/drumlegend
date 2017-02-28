@@ -1,13 +1,33 @@
 import { TestBed, async } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
+import { GameModule } from './game/game.module';
+import { SynthesizerModule } from './synthesizer/synthesizer.module';
+import { HttpModule } from '@angular/http';
+import { PipelineService } from './synthesizer/services/pipeline/pipeline.service';
+import { SequencerService } from './synthesizer/services/pipeline/processors/sequencer.service';
+import { DrumPCMTriggeringService } from './synthesizer/services/pipeline/synthesis/drum-pcm-triggering.service';
+import { MidiNoteService } from './synthesizer/services/pipeline/synthesis/midi-note.service';
+import { SynthesisService } from './synthesizer/services/pipeline/synthesis/synthesis.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        HttpModule,
+        GameModule,
+        SynthesizerModule
+      ],
       declarations: [
         AppComponent
       ],
+      providers: [
+        PipelineService,
+        SequencerService,
+        DrumPCMTriggeringService,
+        MidiNoteService,
+        SynthesisService
+      ]
     }).compileComponents();
   }));
 
@@ -17,16 +37,4 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it(`should have as title 'app works!'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app works!');
-  }));
-
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('app works!');
-  }));
 });

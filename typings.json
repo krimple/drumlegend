@@ -1,0 +1,5 @@
+{
+  "globalDependencies": {
+    "state-machine": "registry:dt/state-machine#2.3.5+20160915014424"
+  }
+}
