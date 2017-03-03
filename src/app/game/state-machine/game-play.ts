@@ -45,7 +45,7 @@ export function gamePlayReducer(state = initialState, action: Action) {
           updatedPattern = '';
           message = 'A match! Good job!';
           // TODO - extract this and flag when game is over
-          patternId = state.patternId >= RUDIMENTS.length ? 0 : state.patternId + 1;
+          patternId = state.patternId >= RUDIMENTS.length - 1 ? 0 : state.patternId + 1;
           pattern = RUDIMENTS[patternId];
         } else {
           updatedPattern = '';
@@ -65,7 +65,10 @@ export function gamePlayReducer(state = initialState, action: Action) {
       }
       // build up new state
       return Object.assign({}, state, {
-          pattern: pattern,
+          pattern: {
+            pattern: pattern.pattern,
+            name: pattern.name
+          },
           patternId: patternId,
           tries: tries,
           receivedPattern: updatedPattern,

@@ -5,6 +5,7 @@ import { DrumPCMTriggeringService } from './services/pipeline/synthesis/drum-pcm
 import { SynthesisService } from './services/pipeline/synthesis/synthesis.service';
 import { AudioOutputService } from './services/pipeline/outputs/audio-output.service';
 import { MidiNoteService } from './services/pipeline/synthesis/midi-note.service';
+import { SequencerService } from './services/pipeline/processors/sequencer.service';
 @NgModule({
   providers: [
     PipelineService,
@@ -12,6 +13,7 @@ import { MidiNoteService } from './services/pipeline/synthesis/midi-note.service
     ImprovedMidiInputService,
     AudioOutputService,
     DrumPCMTriggeringService,
+    SequencerService,
     SynthesisService
   ],
 })

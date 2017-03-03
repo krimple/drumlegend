@@ -13,15 +13,12 @@ export class SequencerService {
   private synthStream$: Subject<SynthMessage>;
   private streamBuffer: StreamEvent[] = [];
   private subscription: Subscription;
+  // start out idle
+  private state = SequencerStates.STOPPED;
 
   constructor(pipelineService: PipelineService) {
     this.synthStream$ = pipelineService.synthStream$;
   }
-
-
-
-  // start out idle
-  private state = SequencerStates.STOPPED;
 
   record() {
     // guard, guard, guard
@@ -102,4 +99,17 @@ export class SequencerService {
     this.streamBuffer.length = 0;
 
   }
+
+  isPlaying() {
+    return this.state === SequencerStates.PLAYING;
+  }
+
+  isStopped() {
+    return this.state === SequencerStates.STOPPED;
+  }
+
+  isRecording() {
+    return this.state === SequencerStates.RECORDING;
+  }
+
 }

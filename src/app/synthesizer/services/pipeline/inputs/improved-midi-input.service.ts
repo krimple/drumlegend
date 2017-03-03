@@ -15,8 +15,9 @@ export class ImprovedMidiInputService {
     'MPK225 Port A': {midi: 'midi'},
     'Adafruit Bluefruit LE Bluetooth': {midi: 'midi'},
     '167603758': {percussion: 'drumset'},
-    '-1614721547': {percussion: 'drumset'},
-    '1999784255': {percussion: 'drumset'}
+    '-1614721547': {percussion: 'drumset'}, // MIDI Kat pad
+    '-1415071510': { midi: 'midi'},         // Bare Conductive
+    '1999784255': {percussion: 'drumset'}   // MIDI Kat board
   };
 
   subscriptions: any[] = [];

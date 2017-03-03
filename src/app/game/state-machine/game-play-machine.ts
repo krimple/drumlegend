@@ -4,13 +4,14 @@ import { SET_PATTERN, AWAIT_PLAYER_PATTERN, SCORE_PATTERN, GET_SCORE, RESET_SCOR
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-interface Pattern {
+export interface Pattern {
   name: string;
   pattern: string;
 }
 
 export interface GamePlayState {
   currentScore: number;
+  receivedPattern: string;
   pattern: Pattern;
 }
 

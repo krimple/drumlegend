@@ -14,12 +14,7 @@ import { SynthNoteMessage, TriggerSample } from '../../../synthesizer/models/syn
   `,
   changeDetection: ChangeDetectionStrategy.Default,
   styles: [
-   `.box {
-      text-align: center;
-      width: 80%;
-      height: 100%;
-      border: 1px solid black;
-    }`
+
   ]
 })
 export class ProgressMeterComponent implements AfterViewInit, OnChanges {
@@ -28,8 +23,7 @@ export class ProgressMeterComponent implements AfterViewInit, OnChanges {
   @Input() height: number;
   @ViewChild('progress') progress: ElementRef;
 
-  constructor(private renderer: Renderer) {
-  }
+  constructor(private renderer: Renderer) { }
 
   ngAfterViewInit() {
     const self = this;

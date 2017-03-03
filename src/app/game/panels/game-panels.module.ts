@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { DrumLegendGameplayPanelComponent } from './gameplay/drum-legend-gameplay-panel.component';
 import { GameComponentsModule } from '../components/game-components.module';
 import { StateMachineModule } from '../state-machine/state-machine-module';
+import { ScoringPanelComponent } from './scoring/scoring-panel.component';
 
 @NgModule({
   declarations: [
-    DrumLegendGameplayPanelComponent
+    DrumLegendGameplayPanelComponent,
+    ScoringPanelComponent
   ],
   imports: [
     CommonModule,
@@ -14,7 +16,8 @@ import { StateMachineModule } from '../state-machine/state-machine-module';
     StateMachineModule
   ],
   exports: [
-    DrumLegendGameplayPanelComponent
+    DrumLegendGameplayPanelComponent,
+    ScoringPanelComponent
   ]
 })
 export class  GamePanelsModule { }

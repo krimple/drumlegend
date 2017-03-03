@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { GameComponentsModule } from './components';
 import { ProgressMeterComponent } from './components';
 import { GamePanelsModule } from './panels/game-panels.module';
+import { GameContainerComponent } from './container/game-container.component';
 
 @NgModule({
   declarations: [
+    GameContainerComponent
   ],
   imports: [
     CommonModule,
@@ -15,7 +17,8 @@ import { GamePanelsModule } from './panels/game-panels.module';
   exports: [
     ProgressMeterComponent,
     GameComponentsModule,
-    GamePanelsModule
+    GamePanelsModule,
+    GameContainerComponent
   ]
 })
 export class GameModule { }

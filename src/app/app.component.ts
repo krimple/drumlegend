@@ -1,25 +1,37 @@
-import { Component } from '@angular/core';
-import { GamePlayMachine, GamePlayState } from './game/state-machine/game-play-machine';
+import { Component, AfterViewInit } from '@angular/core';
+import { GamePlayMachine } from './game/state-machine/game-play-machine';
 import { Observable } from 'rxjs';
+import { PipelineService } from './synthesizer/services/pipeline/pipeline.service';
+import { SequencerService } from './synthesizer/services/pipeline/processors/sequencer.service';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <game-container></game-container>
-    <button (click)="setPattern('paradiddle', 'RLRRLRLL')">Set Paradiddle</button>
-    <button (click)="sendStroke('L')">Left</button>
-    <button (click)="sendStroke('R')">Right</button>
-    <h2>Game play state</h2>
-    <pre>{{ gamePlayMachine.gamePlayState | async | json }}</pre>
- `,
-
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
 
-  gamePlayState: GamePlayState;
+  constructor(private pipelineService: PipelineService,
+              public gamePlayMachine: GamePlayMachine,
+              private sequencerService: SequencerService) {
+    pipelineService.begin();
+  }
 
-  constructor(public gamePlayMachine: GamePlayMachine) {
-    const self = this;
+  startRecording() {
+    if (this.sequencerService.isStopped()) {
+      this.sequencerService.record();
+    }
+  }
+
+  stopRecording() {
+    if (this.sequencerService.isRecording()) {
+      this.sequencerService.stop();
+    }
+  }
+
+  startPlayback() {
+    if (this.sequencerService.isStopped()) {
+      this.sequencerService.playback();
+    }
   }
 
   setPattern(name, pattern) {
