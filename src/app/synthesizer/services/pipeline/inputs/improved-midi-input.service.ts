@@ -17,10 +17,11 @@ export class ImprovedMidiInputService {
     '167603758': {percussion: 'drumset'},
     '-1614721547': {percussion: 'drumset'}, // MIDI Kat pad
     '-1415071510': { midi: 'midi'},         // Bare Conductive
-    '1999784255': {percussion: 'drumset'}   // MIDI Kat board
+    '1999784255': {percussion: 'drumset'},  // MIDI Kat board
+    '0C2F7210E6038867BE36D163C7D8C2457143C8FA73EC54BD8F32417669F0B2C6': { percussion: 'drumset'}
   };
 
-  subscriptions: any[] = [];
+  subscriptions: any[] = []
   subscribedDevices: any[] = [];
 
   // reference to pipeline's synth service stream

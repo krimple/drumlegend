@@ -5,9 +5,19 @@ import {Observable} from "rxjs";
   selector: 'scoring-panel',
   template: `
     <div class="scoring">
-      <h2>Score {{ currentScore }}</h2>
-      <h3>YOU:  {{ receivedPattern }}</h3>
-      <h3>Target: {{ pattern?.name }} ({{ pattern?.pattern }})</h3>
+      <span id="scoreLabel">SCORE:</span>
+      <span id="score">{{ currentScore }}</span>
+    </div>
+    <div class="monitor">
+      <div id="received">
+        <span id="receivedLabel">YOU:</span>
+        <span id="receivedPattern">{{ receivedPattern }}</span>
+      </div>
+      <div id="target">
+        <span id="targetLabel">Target:</span> 
+        <span id="targetName">{{ pattern?.name }}</span>
+        <span id="targetPattern">({{ pattern?.pattern }})</span>
+      </div>
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
