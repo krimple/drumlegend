@@ -1,8 +1,8 @@
-import { Component, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {Component, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Input} from '@angular/core';
 import { GamePlayState, GamePlayMachine } from '../../state-machine/game-play-machine';
 import { PipelineService } from '../../../synthesizer/services/pipeline/pipeline.service';
 import { SynthMessage, TriggerSample } from '../../../synthesizer/models/synth-note-message';
-import { Sample } from '../../../synthesizer/models/sample';
+import {Observable} from "rxjs";
 @Component({
   selector: 'drum-legend-gameplay-panel',
   styles: [
@@ -26,7 +26,8 @@ import { Sample } from '../../../synthesizer/models/sample';
 export class DrumLegendGameplayPanelComponent implements AfterViewInit {
 
   debugMode = true;
-  gamePlayState: GamePlayState;
+
+  @Input() gamePlayState: Observable<GamePlayState>;
 
   constructor(public gamePlayMachine: GamePlayMachine,
               private pipelineService: PipelineService,

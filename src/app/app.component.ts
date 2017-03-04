@@ -8,13 +8,17 @@ import { SequencerService } from './synthesizer/services/pipeline/processors/seq
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
 
   constructor(private pipelineService: PipelineService,
               public gamePlayMachine: GamePlayMachine,
-              private sequencerService: SequencerService) {
-    pipelineService.begin();
+              private sequencerService: SequencerService) { }
+
+  ngAfterViewInit() {
+    this.pipelineService.begin();
   }
+
+
 
   startRecording() {
     if (this.sequencerService.isStopped()) {
