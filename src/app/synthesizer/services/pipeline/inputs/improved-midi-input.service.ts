@@ -11,17 +11,18 @@ declare var navigator: any;
 @Injectable()
 export class ImprovedMidiInputService {
 
-  deviceMappings: any = {
-    'MPK225 Port A': {midi: 'midi'},
-    'Adafruit Bluefruit LE Bluetooth': {midi: 'midi'},
-    '167603758': {percussion: 'drumset'},
-    '-1614721547': {percussion: 'drumset'}, // MIDI Kat pad
-    '-1415071510': { midi: 'midi'},         // Bare Conductive
-    '1999784255': {percussion: 'drumset'},  // MIDI Kat board
-    '0C2F7210E6038867BE36D163C7D8C2457143C8FA73EC54BD8F32417669F0B2C6': { percussion: 'drumset'}
-  };
+  deviceMappings: any = [
+    { key: 'name', value: 'MPK225 Port A', type: 'midi'},
+    { key: 'name', value: 'KMC MultiPad', type: 'percussion'},
+    { key: 'name', value: 'Adafruit Bluefruit LE Bluetooth', type: 'midi'},
+    { key: 'id', value: '167603758', type: 'percusson' },
+    { key: 'id', value: '-1614721547', type: 'percussion'}, // MIDI Kat pad
+    { key: 'id', value: '-1415071510', type: 'midi'},         // Bare Conductive
+    { key: 'id', value: '1999784255', type: 'percussion'},  // MIDI Kat board
+    { key: 'id', value: '0C2F7210E6038867BE36D163C7D8C2457143C8FA73EC54BD8F32417669F0B2C6', type: 'percussion'}
+  ];
 
-  subscriptions: any[] = []
+  subscriptions: any[] = [];
   subscribedDevices: any[] = [];
 
   // reference to pipeline's synth service stream
@@ -49,7 +50,9 @@ export class ImprovedMidiInputService {
           console.dir(devices);
 
           devices.forEach((device) => {
-            const deviceInfo = this.deviceMappings[device.id];
+            const deviceInfo = this.deviceMappings.find((deviceMapping: any) => {
+             return deviceMapping.value === device[deviceMapping.key];
+            });
             if (deviceInfo) {
               self.subscribedDevices.push(deviceInfo);
               self.subscribe(device, deviceInfo);
@@ -69,9 +72,9 @@ export class ImprovedMidiInputService {
     device.open()
       .then((subscription) => {
         console.log('subscribed!');
-        if (deviceInfo.midi) {
+        if (deviceInfo.type === 'midi') {
           self.startMusicNoteMessageDelivery(device, subscription);
-        } else if (deviceInfo.percussion) {
+        } else if (deviceInfo.type === 'percussion') {
           self.startPercussionDelivery(device, subscription, deviceInfo.percussion);
         }
       });
@@ -94,7 +97,6 @@ export class ImprovedMidiInputService {
     };
 
     this.subscriptions.push(subscription);
-
   }
 
   stop() {
