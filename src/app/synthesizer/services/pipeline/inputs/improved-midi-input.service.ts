@@ -18,7 +18,8 @@ export class ImprovedMidiInputService {
     '-1614721547': {percussion: 'drumset'}, // MIDI Kat pad
     '-1415071510': { midi: 'midi'},         // Bare Conductive
     '1999784255': {percussion: 'drumset'},  // MIDI Kat board
-    '0C2F7210E6038867BE36D163C7D8C2457143C8FA73EC54BD8F32417669F0B2C6': { percussion: 'drumset'}
+    '0C2F7210E6038867BE36D163C7D8C2457143C8FA73EC54BD8F32417669F0B2C6': { percussion: 'drumset'},
+    '9C984D8854A19A0BF52409A870EF5407A7653DAECC037C31DEA6217E75DEBFB7': { percussion: 'drumset'}
   };
 
   subscriptions: any[] = []
