@@ -19,10 +19,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css",
-        "other-styles.scss"
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "styles.scss"
       ],
       "scripts": [
+        "assets/hammer-time.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

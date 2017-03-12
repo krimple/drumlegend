@@ -23,6 +23,8 @@
     "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^2.2.1",
     "angular-audio-context": "^5.0.0",
+    "bootstrap": "^3.3.7",
+    "bootstrap-sass": "^3.3.7",
     "core-js": "^2.4.1",
     "javascript-state-machine": "^2.4.0",
     "rxjs": "^5.1.0",

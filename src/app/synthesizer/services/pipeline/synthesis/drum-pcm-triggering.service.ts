@@ -40,7 +40,7 @@ export class DrumPCMTriggeringService {
   subscribeTo(context: AudioContext, targetNode: AudioNode) {
       const self = this;
       const gain = context.createGain();
-      gain.gain.value = 1.0;
+      gain.gain.value = 1;
 
       // now sip please, get what you want and play it!
       self.synthStream$

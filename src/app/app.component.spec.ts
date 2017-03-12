@@ -1,7 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
-import { GameModule } from './game/game.module';
+import { GamesModule } from './games/games.module';
 import { SynthesizerModule } from './synthesizer/synthesizer.module';
 import { HttpModule } from '@angular/http';
 import { PipelineService } from './synthesizer/services/pipeline/pipeline.service';
@@ -15,7 +15,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpModule,
-        GameModule,
+        GamesModule,
         SynthesizerModule
       ],
       declarations: [

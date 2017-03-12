@@ -6,7 +6,7 @@ import {
   WaveformChange
 } from '../../../models';
 import { MidiNoteService, Note } from './midi-note.service';
-import { TriggerSample } from '../../../models/synth-note-message';
+import {ClockTick, TriggerSample} from '../../../models/synth-note-message';
 
 @Injectable()
 export class SynthesisService {
@@ -51,9 +51,9 @@ export class SynthesisService {
               this.midiNoteService.playNoteByNoteValue(message.note);
             }
             // TODO restore this
-            // } else if (message instanceof ClockTick) {
-            //  console.log('pulse!');
-            //  self.clockTick();
+          } else if (message instanceof ClockTick) {
+              console.log('pulse!');
+              self.clockTick();
           } else if (message instanceof SynthNoteOff) {
             if (typeof message.note === 'number') {
               this.midiNoteService.stopNoteByMidiNoteNumber(message.note);

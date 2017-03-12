@@ -18,7 +18,7 @@ export class AudioOutputService {
     this.mainMixOutput = audioContext.destination;
     this.mainMixCompressor = audioContext.createDynamicsCompressor();
     this.mainMixFinalGain = audioContext.createGain();
-    this.mainMixFinalGain.gain.value = 1.0;
+    this.mainMixFinalGain.gain.value = 0.9;
     this.mainMixCompressor.connect(this.mainMixFinalGain);
     this.mainMixFinalGain.connect(this.mainMixOutput);
     this.messageStream$ = messageStream$;

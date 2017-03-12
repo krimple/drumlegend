@@ -1,19 +1,13 @@
 
 import { Store } from '@ngrx/store';
-import { SET_PATTERN, AWAIT_PLAYER_PATTERN, SCORE_PATTERN, GET_SCORE, RESET_SCORE, SEND_STROKE } from './game-play';
+import {
+  SET_PATTERN, AWAIT_PLAYER_PATTERN, SCORE_PATTERN, GET_SCORE, RESET_GAME,
+  SEND_STROKE, PAUSE, RESUME
+} from './game-play-reducer';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import {GamePlayState} from './game-play-state';
 
-export interface Pattern {
-  name: string;
-  pattern: string;
-}
-
-export interface GamePlayState {
-  currentScore: number;
-  receivedPattern: string;
-  pattern: Pattern;
-}
 
 @Injectable()
 export class GamePlayMachine {
@@ -31,10 +25,23 @@ export class GamePlayMachine {
     this.store.dispatch({ type: AWAIT_PLAYER_PATTERN });
   }
 
+  pauseForMessages() {
+    this.store.dispatch({ type: PAUSE });
+  }
+
+  resume() {
+    this.store.dispatch({type: RESUME});
+  }
+
+  resetGame() {
+    this.store.dispatch({ type: RESET_GAME });
+  }
+
   scorePattern() {
     this.store.dispatch({ type: SCORE_PATTERN });
   }
-  sendStroke(stroke: string){
+
+  sendStroke(stroke: string) {
     this.store.dispatch({ type: SEND_STROKE, payload: { stroke: stroke } });
   }
 }

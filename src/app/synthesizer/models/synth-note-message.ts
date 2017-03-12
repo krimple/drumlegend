@@ -30,9 +30,11 @@ export class SynthNoteOff extends SynthNoteMessage {
 
 export class TriggerSample extends SynthMessage {
   public instrument: string;
-  constructor(instrument: string) {
+  public velocity: number;
+  constructor(instrument: string, velocity: number) {
    super('SAMPLE!');
    this.instrument = instrument;
+   this.velocity = velocity;
   }
 }
 
