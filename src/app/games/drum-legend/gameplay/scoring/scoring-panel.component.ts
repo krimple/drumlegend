@@ -18,7 +18,8 @@ import {Observable, Subscription} from "rxjs";
       <h3 class="text-center">{{ gameState?.currentScore }}</h3>
     </div>
   `,
-  styleUrls      : ['./scoring-panel.component.scss']
+  styleUrls      : ['./scoring-panel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScoringPanelComponent implements AfterViewInit {
   gameState: GamePlayState;
@@ -33,6 +34,7 @@ export class ScoringPanelComponent implements AfterViewInit {
     const self = this;
     self.gamePlayMachine.gamePlayState.subscribe((state) => {
       self.gameState = state;
+      self.changeDetectorRef.markForCheck();
     });
   }
 }

@@ -157,17 +157,36 @@ export class ImprovedMidiInputService {
       const velocity = midiChannelMessage.data[2];
       switch (midiChannelMessage.data[1]) {
         case 38:
+          this.zone.run(() => {
           this.triggerSample('snare', velocity);
+        });
          break;
         case 36:
-          this.triggerSample('bass', velocity);
+          this.zone.run(() => {
+            this.triggerSample('bass', velocity);
+          });
           break;
         case 50:
-          this.triggerSample('tom1', velocity);
+          this.zone.run(() => {
+            this.triggerSample('tom1', velocity);
+          });
           break;
         case 51:
-          this.triggerSample('tom2', velocity);
+          this.zone.run(() => {
+            this.triggerSample('tom2', velocity);
+          });
           break;
+        case 52:
+          this.zone.run(() => {
+            this.triggerSample('ride', velocity);
+          });
+          break;
+        case 53:
+          this.zone.run(() => {
+            this.triggerSample('tom1', velocity);
+          });
+          break;
+
         default:
           console.log('unknown drum', midiChannelMessage.data[1]);
       }

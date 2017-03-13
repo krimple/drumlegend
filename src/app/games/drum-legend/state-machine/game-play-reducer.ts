@@ -99,7 +99,7 @@ export function gamePlayReducer(state = initialState, action: Action) {
       let rudimentPosition = state.rudimentPosition + 1;
       let score: number = state.currentScore;
       let message = '';
-      let pause = false;
+      let paused = false;
       let tries = state.tries;
       const match = state.rudiment.pattern.substr(0, rudimentPosition) === updatedPattern;
       // if the pattern is correct so far, score a point
@@ -117,7 +117,7 @@ export function gamePlayReducer(state = initialState, action: Action) {
         tries = tries + 1;
         rudimentPosition = 0;
         updatedPattern = '';
-        pause = true;
+        paused = true;
         if (tries > 2) {
           rudimentId = state.rudimentId >= RUDIMENTS.length - 1 ? 0 : state.rudimentId + 1;
           rudiment = RUDIMENTS[rudimentId];
@@ -128,7 +128,7 @@ export function gamePlayReducer(state = initialState, action: Action) {
       // build up new state
       const newState: GamePlayState = Object.assign({}, state, {
         rudiment       : rudiment,
-        pause          : pause,
+        paused         : paused,
         rudimentId     : rudimentId,
         tries          : tries,
         receivedPattern: updatedPattern,

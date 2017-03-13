@@ -20,7 +20,7 @@ export class DrumPCMTriggeringService {
           bass: new Sample('assets/drums/bass-thud.wav'),
           hihat: new Sample('assets/drums/hi-hat-closed.wav'),
           hihatopen: new Sample('assets/drums/hi-hat-open.wav'),
-          snare: new Sample('assets/drums/ringing-snare.wav'),
+          snare: new Sample('assets/drums/short-snare.wav'),
           flam: new Sample('assets/drums/snare-flam.wav'),
           rimshot: new Sample('assets/drums/snare-rimshot.wav'),
           htrimshot: new Sample('assets/drums/hi-tom-rimshot.wav'),

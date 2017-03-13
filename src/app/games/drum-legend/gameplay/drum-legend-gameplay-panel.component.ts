@@ -1,6 +1,6 @@
 import {
   Component, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Input,
-  OnChanges, SimpleChanges, OnDestroy, OnInit
+  OnChanges, SimpleChanges, OnDestroy, OnInit, NgZone
 } from '@angular/core';
 import {GamePlayState, GamePlayMachine} from '../state-machine';
 import {PipelineService} from '../../../synthesizer/services/pipeline/pipeline.service';
@@ -10,27 +10,29 @@ import {
 } from '../../../synthesizer/models/synth-note-message';
 import {Observable, Subscription} from "rxjs";
 @Component({
-  selector: 'drum-legend-gameplay-panel',
-  template: `
-      <div class="row" *ngIf="muteNotes">
-         <h2 class="text-center" *ngIf="message">{{ message }}</h2>
-      </div>
-    
-      <div class="row" *ngIf="!muteNotes">
-        <div class="col-md-3">
-           <div class="jumbotron">
-                <scoring-panel></scoring-panel>
-          </div>
+  selector       : 'drum-legend-gameplay-panel',
+  template       : `
+    <div class="row" *ngIf="muteNotes">
+      <h2 class="text-center" *ngIf="message">{{ message }}</h2>
+    </div>
+
+    <div class="row" *ngIf="!muteNotes">
+      <div class="col-md-3">
+        <div class="jumbotron">
+          <scoring-panel></scoring-panel>
         </div>
-        <div class="col-md-6">
-          <drum-stroke-info> </drum-stroke-info>
       </div>
-         <div class="col-md-3">
-            <drum-pattern-info></drum-pattern-info>
-          </div>
+      <div class="col-md-9">
+        <drum-stroke-info></drum-stroke-info>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <drum-pattern-info></drum-pattern-info>
+      </div>
+    </div>
   `,
-  host: {'(window:keydown)': 'interceptKey($event)'},
+  host           : {'(window:keydown)': 'interceptKey($event)'},
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -45,7 +47,8 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
 
   constructor(public gamePlayMachine: GamePlayMachine,
               private pipelineService: PipelineService,
-              private changeDetector: ChangeDetectorRef) {
+              private changeDetector: ChangeDetectorRef,
+              private zone: NgZone) {
     this.gamePlayState = this.gamePlayMachine.gamePlayState;
   }
 
@@ -53,13 +56,19 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
     const self = this;
     this.gamePlayStateSubscription = this.gamePlayState.subscribe(
       (state: GamePlayState) => {
-      // console.log('got state change to main component', state);
+        // console.log('got state change to main component', state);
         this.message = state.message;
-        this.muteNotes = state.paused;
-        if (state.paused) {
-          setTimeout(() => {
-            this.gamePlayMachine.resume();
-          }, 3000);
+        if (state.paused === true) {
+          console.log('*** PAUSED ***');
+          self.muteNotes = state.paused;
+          console.log('restoring state momentarily');
+          self.zone.run(() => {
+            setTimeout(() => {
+              self.gamePlayMachine.resume();
+              self.changeDetector.markForCheck();
+              self.muteNotes = false;
+            }, 3000);
+          });
         }
       });
   }
@@ -81,7 +90,7 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
     if ($event.key === 'p') {
       this.gamePlayMachine.pauseForMessages();
     }
-   }
+  }
 
   sendStroke(stroke) {
     const self = this;
@@ -107,20 +116,20 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
     // note we only subscribe to sample messages, so
     // a synthesizer can connect regardless.
     this.pipelineSubscription = this.pipelineService.synthStream$
-        .filter((message: SynthMessage) => message instanceof TriggerSample)
-        .subscribe((sample: TriggerSample) => {
-      // pause detect
-         if (sample.instrument === 'snare' && !self.muteNotes) {
-           self.lastNote = 'L';
-           self.gamePlayMachine.sendStroke('L');
-           self.changeDetector.detectChanges();
-           self.lastNote = 'L';
-         } else if (sample.instrument === 'bass' && !self.muteNotes) {
-           self.lastNote = 'R';
-           self.gamePlayMachine.sendStroke('R');
-           self.changeDetector.detectChanges();
-         }
-       });
+                                    .filter((message: SynthMessage) => message instanceof TriggerSample)
+                                    .subscribe((sample: TriggerSample) => {
+                                      // pause detect
+                                      if (sample.instrument === 'snare' && !self.muteNotes) {
+                                        self.lastNote = 'L';
+                                        self.gamePlayMachine.sendStroke('L');
+                                        self.changeDetector.detectChanges();
+                                        self.lastNote = 'L';
+                                      } else if (sample.instrument === 'bass' && !self.muteNotes) {
+                                        self.lastNote = 'R';
+                                        self.gamePlayMachine.sendStroke('R');
+                                        self.changeDetector.detectChanges();
+                                      }
+                                    });
   }
 
   ngOnDestroy() {
