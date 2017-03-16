@@ -3,7 +3,7 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Input
+  Input, OnDestroy, OnInit
 } from '@angular/core';
 import {
   GamePlayState,
@@ -13,15 +13,17 @@ import {Observable, Subscription} from "rxjs";
 @Component({
   selector       : 'scoring-panel',
   template       : `
-    <div>
-      <h3 class="text-center">SCORE</h3>
-      <h3 class="text-center">{{ gameState?.currentScore }}</h3>
+    <div class="row">
+      <div class="col-xs-4"><span class="score">Score</span></div>
+      <div class="col-xs-2"><span class="score-value">{{ gameState?.currentScore }}</span></div>
+      <div class="col-xs-2"></div>
+      <div class="col-xs-4 text-center"><span class="message">{{ gameState.message }}</span></div>
     </div>
   `,
   styleUrls      : ['./scoring-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ScoringPanelComponent implements AfterViewInit {
+export class ScoringPanelComponent implements OnInit, OnDestroy {
   gameState: GamePlayState;
   subscription: Subscription;
   currentScore: number;
@@ -30,11 +32,15 @@ export class ScoringPanelComponent implements AfterViewInit {
               private changeDetectorRef: ChangeDetectorRef) {
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     const self = this;
-    self.gamePlayMachine.gamePlayState.subscribe((state) => {
+    self.subscription = self.gamePlayMachine.gamePlayState.subscribe((state) => {
       self.gameState = state;
       self.changeDetectorRef.markForCheck();
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

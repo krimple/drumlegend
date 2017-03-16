@@ -91,7 +91,7 @@ export class Note {
   public static context: AudioContext;
   private static audioBus: AudioNode;
   private static controlPanelDataChanges$: Observable<ControlPanelData>;
-  private static waveform = 'sawtooth';
+  private static waveform = 'sine';
 
   // for any notes that are fired, here's the message to stop them
   private stopWatcher$: Subject<number> = new Subject<number>();

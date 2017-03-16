@@ -8,10 +8,9 @@ import {Rudiment} from '../state-machine/rudiment';
   selector: 'drum-pattern-info',
   template: `
     <div class="well">
-      <h3>{{ rudiment?.name }}</h3>
+      <h3 class="text-center">{{ rudiment?.name }} {{ rudiment?.visiblePattern }}</h3>
       <hr/>
-      <h4>{{ rudiment?.visiblePattern }}</h4>
-      <p>{{ rudiment?.description }}</p>
+      <p class="text-center">{{ rudiment?.description }}</p>
     </div>`
 })
 export class DrumPatternInfoComponent implements AfterViewInit, OnDestroy {

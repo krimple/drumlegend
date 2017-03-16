@@ -12,17 +12,13 @@ import {Observable, Subscription} from "rxjs";
 @Component({
   selector       : 'drum-legend-gameplay-panel',
   template       : `
-    <div class="row" *ngIf="muteNotes">
-      <h2 class="text-center" *ngIf="message">{{ message }}</h2>
-    </div>
-
-    <div class="row" *ngIf="!muteNotes">
-      <div class="col-md-3">
-        <div class="jumbotron">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="well">
           <scoring-panel></scoring-panel>
         </div>
       </div>
-      <div class="col-md-9">
+      <div class="col-md-12">
         <drum-stroke-info></drum-stroke-info>
       </div>
     </div>
@@ -65,8 +61,8 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
           self.zone.run(() => {
             setTimeout(() => {
               self.gamePlayMachine.resume();
-              self.changeDetector.markForCheck();
               self.muteNotes = false;
+              self.changeDetector.markForCheck();
             }, 3000);
           });
         }
@@ -102,7 +98,7 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
       this.pipelineService.synthStream$.next(new TriggerSample('snare', 255));
       self.changeDetector.detectChanges();
     } else if (stroke === 'R' || stroke === 'r') {
-      this.pipelineService.synthStream$.next(new TriggerSample('bass', 255));
+      this.pipelineService.synthStream$.next(new TriggerSample('tom1', 255));
       self.changeDetector.detectChanges();
     }
   }
@@ -112,11 +108,12 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
 
     // Subscribe to the pipeline and watch for notes
     // if the notes are snare, score a left stroke
-    // if the notes are bass, score a right stroke
+    // if the notes are tom1, score a right stroke
     // note we only subscribe to sample messages, so
     // a synthesizer can connect regardless.
     this.pipelineSubscription = this.pipelineService.synthStream$
                                     .filter((message: SynthMessage) => message instanceof TriggerSample)
+                                    .debounceTime(100)
                                     .subscribe((sample: TriggerSample) => {
                                       // pause detect
                                       if (sample.instrument === 'snare' && !self.muteNotes) {
@@ -124,7 +121,7 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
                                         self.gamePlayMachine.sendStroke('L');
                                         self.changeDetector.detectChanges();
                                         self.lastNote = 'L';
-                                      } else if (sample.instrument === 'bass' && !self.muteNotes) {
+                                      } else if (sample.instrument === 'tom1' && !self.muteNotes) {
                                         self.lastNote = 'R';
                                         self.gamePlayMachine.sendStroke('R');
                                         self.changeDetector.detectChanges();
