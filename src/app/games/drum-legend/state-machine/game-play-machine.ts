@@ -1,4 +1,3 @@
-
 import { Store } from '@ngrx/store';
 import {
   CONTINUE, NEXT_PATTERN, AWAIT_PLAYER_PATTERN, SCORE_PATTERN, GET_SCORE, RESET_GAME,
@@ -6,8 +5,7 @@ import {
 } from './game-play-reducer';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import {GamePlayState} from './game-play-state';
-import {type} from 'os';
+import { GamePlayState } from './game-play-state';
 
 
 @Injectable()
@@ -18,29 +16,18 @@ export class GamePlayMachine {
     this.gamePlayState = store.select('gamePlay');
   }
 
-  nextTurn() {
-      const self = this;
-      this.store.dispatch({ type: CONTINUE, payload: { timeLeftInSeconds: 60 });
-      const interval = setInterval(() => {
-          this.store.dispatch({ type: DECREMENT_TIME_IN_SECONDS });
-          this.store.dispatch({ type: PAUSE });
-      }, 
-  }
-
-  updateTimeTicks(tick: number) {
-      this.store.dispatch( type: SET_TIME_TICK, payload: { tick: tick });
-  }
-
-  setPattern(name: string, pattern: string) {
-    this.store.dispatch({ type: SET_PATTERN, payload: {pattern: { name: name, pattern: pattern }}});
+  play() {
+    const self = this;
+    this.store.dispatch({type: CONTINUE });
+    this.store.dispatch({type: 'START_TIMER', payload: { seconds: 5}});
   }
 
   awaitPlayerPattern() {
-    this.store.dispatch({ type: AWAIT_PLAYER_PATTERN });
+    this.store.dispatch({type: AWAIT_PLAYER_PATTERN});
   }
 
   pauseForMessages() {
-    this.store.dispatch({ type: PAUSE });
+    this.store.dispatch({type: PAUSE});
   }
 
   resume() {
@@ -48,14 +35,14 @@ export class GamePlayMachine {
   }
 
   resetGame() {
-    this.store.dispatch({ type: RESET_GAME });
+    this.store.dispatch({type: RESET_GAME});
   }
 
   scorePattern() {
-    this.store.dispatch({ type: SCORE_PATTERN });
+    this.store.dispatch({type: SCORE_PATTERN});
   }
 
   sendStroke(stroke: string) {
-    this.store.dispatch({ type: SEND_STROKE, payload: { stroke: stroke } });
+    this.store.dispatch({type: SEND_STROKE, payload: {stroke: stroke}});
   }
 }

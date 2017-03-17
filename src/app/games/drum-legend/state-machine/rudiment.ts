@@ -4,4 +4,5 @@ export class Rudiment {
   visiblePattern: string;
   pattern: string;
   points: number;
+  challengeTimeInSeconds: number;
 }

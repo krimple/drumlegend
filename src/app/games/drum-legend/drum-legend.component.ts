@@ -27,7 +27,8 @@ import {Observable} from 'rxjs';
 })
 export class DrumLegendComponent {
   gamePlayState: Observable<GamePlayState>;
-  constructor(stateMachine: GamePlayMachine) {
+  constructor(stateMachine: GamePlayMachine, gamePlayMachine: GamePlayMachine) {
     this.gamePlayState = stateMachine.gamePlayState;
+    gamePlayMachine.play();
   }
 }

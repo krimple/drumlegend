@@ -5,6 +5,7 @@ span.playedPatternTitle {
 }
 span.noteHistory {
     font-size: 2em;
+    letter-spacing: 5px;
     color: #FFF;
     font-weight: bold;
 }
@@ -12,11 +13,13 @@ span.lastNote {
     font-size: 2em;
     color: #FFE9AA;
     font-weight: bold;
+    letter-spacing: 5px;
 }
 span.upcoming-notes, span.played-notes {
     font-size: 2em;
     color: #AAA;
     font-weight: bold;
+    letter-spacing: 5px;
 }
 
 span.currentNote {

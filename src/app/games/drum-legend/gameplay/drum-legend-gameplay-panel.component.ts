@@ -134,10 +134,5 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
     this.gamePlayStateSubscription.unsubscribe();
     this.pipelineSubscription.unsubscribe();
   }
-
-  setPattern(name, pattern) {
-    this.gamePlayMachine.setPattern(name, pattern);
-  }
-
 }
 

@@ -3,17 +3,16 @@ export class GamePlayState {
   rudiment: Rudiment;
   receivedPattern: string;
   correctMatches: number;
-  currentScore: number;
+  levelScore: number;
+  totalScore: number;
   rudimentId: number;
   rudimentPosition: number;
   paused: boolean;
   message: string;
-  timeLeft: number;
+  challengeTimeInSeconds: number;
   scoreLog: GamePlayLevelScoring[] = [];
 }
 
 export class GamePlayLevelScoring {
-  rudiment: Rudiment;
-  matches: number;
-  totalScore: number;
+  constructor(public rudiment: Rudiment, public matches: number, public totalScore: number) {}
 }

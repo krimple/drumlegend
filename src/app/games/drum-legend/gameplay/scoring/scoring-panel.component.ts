@@ -14,8 +14,8 @@ import {Observable, Subscription} from "rxjs";
   selector       : 'scoring-panel',
   template       : `
     <div class="row">
-      <div class="col-xs-4"><span class="score">Score</span></div>
-      <div class="col-xs-2"><span class="score-value">{{ gameState?.currentScore }}</span></div>
+      <div class="col-xs-4"><span class="score">Total Score</span></div>
+      <div class="col-xs-2"><span class="score-value">{{ gameState?.totalScore}}</span></div>
       <div class="col-xs-2"></div>
       <div class="col-xs-4 text-center"><span class="message">{{ gameState.message }}</span></div>
     </div>
