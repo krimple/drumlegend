@@ -1,6 +1,6 @@
 import {
   Component, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Input,
-  OnChanges, SimpleChanges, OnDestroy, OnInit, NgZone
+  OnDestroy, OnInit, NgZone
 } from '@angular/core';
 import {GamePlayState, GamePlayMachine} from '../state-machine';
 import {PipelineService} from '../../../synthesizer/services/pipeline/pipeline.service';
@@ -111,22 +111,23 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
     // if the notes are tom1, score a right stroke
     // note we only subscribe to sample messages, so
     // a synthesizer can connect regardless.
-    this.pipelineSubscription = this.pipelineService.synthStream$
-                                    .filter((message: SynthMessage) => message instanceof TriggerSample)
-                                    .debounceTime(100)
-                                    .subscribe((sample: TriggerSample) => {
-                                      // pause detect
-                                      if (sample.instrument === 'snare' && !self.muteNotes) {
-                                        self.lastNote = 'L';
-                                        self.gamePlayMachine.sendStroke('L');
-                                        self.changeDetector.detectChanges();
-                                        self.lastNote = 'L';
-                                      } else if (sample.instrument === 'tom1' && !self.muteNotes) {
-                                        self.lastNote = 'R';
-                                        self.gamePlayMachine.sendStroke('R');
-                                        self.changeDetector.detectChanges();
-                                      }
-                                    });
+    this.pipelineSubscription =
+      this.pipelineService.synthStream$
+          .filter((message: SynthMessage) => message instanceof TriggerSample)
+          .debounceTime(100)
+          .subscribe((sample: TriggerSample) => {
+            // pause detect
+            if (sample.instrument === 'snare' && !self.muteNotes) {
+              self.lastNote = 'L';
+              self.gamePlayMachine.sendStroke('L');
+              self.changeDetector.detectChanges();
+              self.lastNote = 'L';
+            } else if (sample.instrument === 'tom1' && !self.muteNotes) {
+              self.lastNote = 'R';
+              self.gamePlayMachine.sendStroke('R');
+              self.changeDetector.detectChanges();
+            }
+          });
   }
 
   ngOnDestroy() {
@@ -139,3 +140,4 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
   }
 
 }
+
