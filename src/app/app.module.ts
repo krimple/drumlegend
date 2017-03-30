@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {Router, RouterModule, Routes} from '@angular/router';
 
-import { SynthesizerModule } from './synthesizer';
+import { SynthesizerModule } from 'ng-webaudio-synthesizer';
 
 import { AppComponent } from './app.component';
 import {GamesModule} from './games/games.module';

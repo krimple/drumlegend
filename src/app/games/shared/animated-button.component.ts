@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {FunctionCall} from '@angular/compiler/src/expression_parser/ast';
+import {FunctionCall} from '@angular/compiler';
 @Component({
   selector: 'animated-button',
   template: `

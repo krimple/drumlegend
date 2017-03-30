@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProgressMeterComponent } from '../shared/progress-meter/progress-meter.component';
 import {DrumLegendComponent} from './drum-legend.component';
-import {SynthesizerModule} from '../../synthesizer/synthesizer.module';
+import {SynthesizerModule} from 'ng-webaudio-synthesizer';
 import {DrumLegendGameplayPanelComponent} from './gameplay/drum-legend-gameplay-panel.component';
 import {ScoringPanelComponent} from './gameplay/scoring/scoring-panel.component';
 import {GamePlayMachine} from './state-machine/game-play-machine';
