@@ -1,6 +1,4 @@
 import {Component, Input, state, ViewEncapsulation} from '@angular/core';
-import { SynthNoteMessage, TriggerSample } from '../../synthesizer/models/synth-note-message';
-import { PipelineService } from '../../synthesizer/services/pipeline/pipeline.service';
 import {GamePlayMachine, GamePlayState} from './state-machine';
 import {Observable} from 'rxjs';
 

@@ -3,11 +3,11 @@ import {
   OnDestroy, OnInit, NgZone
 } from '@angular/core';
 import {GamePlayState, GamePlayMachine} from '../state-machine';
-import {PipelineService} from '../../../synthesizer/services/pipeline/pipeline.service';
+import {SynthesizerService} from 'ng-webaudio-synthesizer';
 import {
   SynthMessage,
   TriggerSample
-} from '../../../synthesizer/models/synth-note-message';
+} from 'ng-webaudio-synthesizer';
 import {Observable, Subscription} from "rxjs";
 @Component({
   selector       : 'drum-legend-gameplay-panel',
@@ -35,14 +35,14 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
   debugMode = false;
   lastNote: string;
   gamePlayState: Observable<GamePlayState>;
-  pipelineSubscription: Subscription;
+  synthStreamSubscription: Subscription;
   gamePlayStateSubscription: Subscription;
   muteNotes = false;
 
   message: String;
 
   constructor(public gamePlayMachine: GamePlayMachine,
-              private pipelineService: PipelineService,
+              private synthService: SynthesizerService,
               private changeDetector: ChangeDetectorRef,
               private zone: NgZone) {
     this.gamePlayState = this.gamePlayMachine.gamePlayState;
@@ -95,10 +95,10 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
     }
 
     if (stroke === 'L' || stroke === 'l') {
-      this.pipelineService.synthStream$.next(new TriggerSample('snare', 255));
+      this.synthService.synthStream$.next(new TriggerSample('snare', 255));
       self.changeDetector.detectChanges();
     } else if (stroke === 'R' || stroke === 'r') {
-      this.pipelineService.synthStream$.next(new TriggerSample('tom1', 255));
+      this.synthService.synthStream$.next(new TriggerSample('tom1', 255));
       self.changeDetector.detectChanges();
     }
   }
@@ -111,8 +111,8 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
     // if the notes are tom1, score a right stroke
     // note we only subscribe to sample messages, so
     // a synthesizer can connect regardless.
-    this.pipelineSubscription =
-      this.pipelineService.synthStream$
+    this.synthStreamSubscription =
+      this.synthService.synthStream$
           .filter((message: SynthMessage) => message instanceof TriggerSample)
           .debounceTime(100)
           .subscribe((sample: TriggerSample) => {
@@ -132,7 +132,7 @@ export class DrumLegendGameplayPanelComponent implements OnInit, AfterViewInit, 
 
   ngOnDestroy() {
     this.gamePlayStateSubscription.unsubscribe();
-    this.pipelineSubscription.unsubscribe();
+    this.synthStreamSubscription.unsubscribe();
   }
 }
 

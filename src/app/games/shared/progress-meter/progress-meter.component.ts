@@ -2,8 +2,6 @@ import {
   Component, AfterViewInit, ViewChild,
   ElementRef, Renderer, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges
 } from '@angular/core';
-import { PipelineService } from '../../../synthesizer/services/pipeline/pipeline.service';
-import { SynthNoteMessage, TriggerSample } from '../../../synthesizer/models/synth-note-message';
 @Component({
   selector: 'progress-meter',
   template: `

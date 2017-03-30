@@ -1,6 +1,6 @@
 import {Component, AfterViewInit, ViewEncapsulation} from '@angular/core';
 import { Observable } from 'rxjs';
-import { PipelineService } from './synthesizer/services/pipeline/pipeline.service';
+import {SynthesizerService} from "ng-webaudio-synthesizer";
 
 @Component({
   selector: 'app-root',
@@ -9,10 +9,9 @@ import { PipelineService } from './synthesizer/services/pipeline/pipeline.servic
 })
 export class AppComponent implements AfterViewInit {
 
-  constructor(private pipelineService: PipelineService) { }
+  constructor(private synthService: SynthesizerService) { }
 
   ngAfterViewInit() {
-    this.pipelineService.begin();
   }
 
 }
