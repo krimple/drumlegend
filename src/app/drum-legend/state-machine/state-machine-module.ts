@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { GameEffects } from './game-effects';
-import { gamePlayReducer } from './game-play-reducer';
+import { GameEffects } from './actions/game-effects';
+import { gamePlayReducer } from './reducers/game-play-reducer';
 import { GamePlayMachine } from './game-play-machine';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
