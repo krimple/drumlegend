@@ -5,7 +5,7 @@ export class GamePlayState {
   receivedPattern: string;
   displayedPattern: string;
   timeLeft: number;
-  correctMatches: number;
+  matches: number;
   levelScore: number;
   totalScore: number;
   rudimentId: number;
@@ -17,5 +17,5 @@ export class GamePlayState {
 }
 
 export class GamePlayLevelScoring {
-  constructor(public rudiment: Rudiment, public matches: number, public totalScore: number) {}
+  constructor(public rudiment: Rudiment, public matches: number, public levelScore: number, public totalScore: number) {}
 }

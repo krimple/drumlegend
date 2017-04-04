@@ -15,8 +15,9 @@ export class GamePlayMachine {
 
   play() {
     const self = this;
+    this.store.dispatch(new actions.BeginGameAction());
     this.store.dispatch(new actions.ContinueAction());
-    this.store.dispatch({type: 'START_TIMER', payload: { seconds: 5}});
+    this.store.dispatch({type: 'START_TIMER'});
   }
 
   awaitPlayerPattern() {

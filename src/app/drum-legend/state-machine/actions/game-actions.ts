@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 
 export const ActionTypes = {
   BEGIN_GAME: 'BEGIN_GAME',
+  END_GAME: 'END_GAME',
   NEXT_PATTERN : 'NEXT_PATTERN',
   AWAIT_PLAYER_PATTERN : 'AWAIT_PLAYER_PATTERN',
   SEND_STROKE : 'SEND_STROKE',
@@ -21,7 +22,7 @@ export class BeginGameAction implements Action {
 }
 
 export class NextPatternAction implements Action {
-   type = ActionTypes.NEXT_PATTERN;
+  type = ActionTypes.NEXT_PATTERN;
 }
 
 export class StartTimerAction implements Action {
@@ -71,7 +72,11 @@ export class TimerDecrementAction implements Action {
   constructor(public payload: number) { }
 }
 
+export class EndGameAction implements Action {
+  type = ActionTypes.END_GAME;
+}
 export type Actions = BeginGameAction
+                      | EndGameAction
                       | NextPatternAction
                       | StartTimerAction
                       | AwaitPlayerPatternAction

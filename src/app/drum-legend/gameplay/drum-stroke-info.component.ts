@@ -16,10 +16,18 @@ import { GamePlayState, } from '../state-machine';
          <div class="col-xs-4"><span class="playedPatternTitle">PATTERN</span></div>
          <div class="col-xs-1"></div>
          <div class="col-xs-7">
-            <span class="upcoming-notes">{{ gamePlayState.rudiment.visiblePattern }}</span>
+            <span class="upcoming-notes">{{ gamePlayState.rudiment?.visiblePattern }}</span>
          </div>
         </div>
-     </div>`,
+        <div class="row">
+          <div class="col-xs-2"></div>
+          <div class="col-xs-4 text-center">
+            <span class="message">
+              {{ gamePlayState.message }}
+            </span>
+          </div>
+        </div>
+      </div>`,
     styleUrls: ['./drum-stroke-info.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

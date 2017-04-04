@@ -1,35 +1,6 @@
-@import '../../../../variables';
-
-.panel {
-  text-align: center;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 2em;
-  color: #ffffff;
-  background-color: #000000;
-
-  .scoring {
-
-  }
-  .monitor {
-
-  }
-
+span.section-title {
+ font-size: 4em;
+ color: #FFFFFF;
+ font-weight: bold;
 }
 
-span.score {
-  font-size: 4em;
-  color: #FFE9AA;
-  font-weight: bold;
-}
-span.score-value {
-  font-size: 4em;
-  color: #FFF;
-  font-weight: bold;
-}
-span.message {
-  text-align: center;
-  vertical-align: middle;
-  font-size: 2em;
-  color: #FFF;
-  font-weight: normal;
-}

@@ -7,7 +7,7 @@ export class Rudiment {
   challengeTimeInSeconds: number;
 }
 
-export const DEFAULT_CHALLENGE_TIME = 60;
+export const DEFAULT_CHALLENGE_TIME = 2;
 
 export const RUDIMENTS: Rudiment[] = [
   {
@@ -35,19 +35,21 @@ export const RUDIMENTS: Rudiment[] = [
     challengeTimeInSeconds: DEFAULT_CHALLENGE_TIME,
     points: 200
   },
-  {
+ {
     name: 'Paradiddle-diddle - Right Hand',
     description: 'This is a variation of the paradiddle that allows for rapid rhythm ' +
-    'patterns in a triplet beat. Used in Jazz ride patterns and much more.',
-    visiblePattern: 'R-L-R-R-L-L L-R-L-L-R-R',
-    pattern: 'RLRRLLLRLLRR',
+    'patterns in a triplet beat. It does not switch hands after each sequence.  ' +
+    'Used in Jazz ride patterns and much more.',
+    visiblePattern: 'R-L-R-R-L-L',
+    pattern: 'RLRRLL',
     challengeTimeInSeconds: DEFAULT_CHALLENGE_TIME,
     points: 300
   },
   {
     name: 'Paradiddle-diddle - Left Hand',
     description: 'This is a variation of the paradiddle that allows for rapid rhythm ' +
-    'patterns in a triplet beat. Used in Jazz ride patterns and much more.',
+    'patterns in a triplet beat. It does not switch hands after each sequence.  ' +
+    'Used in Jazz ride patterns and much more.',
     visiblePattern: 'L-R-L-L-R-R',
     pattern: 'LRLLRR',
     challengeTimeInSeconds: DEFAULT_CHALLENGE_TIME,
@@ -57,7 +59,7 @@ export const RUDIMENTS: Rudiment[] = [
     name: 'Double Paraddidle',
     description: 'A paradiddle rhythm in three parts, this is often used to flip the leading hands in a drum rudiment',
     visiblePattern: 'R-L-R-L-R-R L-R-L-R-L-L',
-    pattern: 'LRLRLL',
+    pattern: 'LRLRLLRLRLRR',
     challengeTimeInSeconds: DEFAULT_CHALLENGE_TIME,
     points: 400
   },
