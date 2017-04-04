@@ -1,49 +1,48 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ChangeDetectionStrategy,
-        ChangeDetectorRef} from '@angular/core';
-import {
-  GamePlayMachine, GamePlayState,
-} from '../state-machine';
-import {Subscription} from 'rxjs';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { GamePlayState, } from '../state-machine';
+
 @Component({
-  selector: 'drum-stroke-info',
+  selector: 'drumlegend-stroke-info',
   template: `
     <div class="well">
         <div class="row">
          <div class="col-xs-4"><span class="playedPatternTitle">YOU</span></div>
          <div class="col-xs-1"></div>
          <div class="col-xs-7">
-            <span class="noteHistory">{{ playedPatternMinusLastNote}}</span>
-            <span class="lastNote">{{ playedLastNote }}</span>
+            <span class="noteHistory">{{ gamePlayState?.displayedPattern}}</span>
          </div>
         </div>
         <div class="row">
          <div class="col-xs-4"><span class="playedPatternTitle">PATTERN</span></div>
          <div class="col-xs-1"></div>
          <div class="col-xs-7">
-            <span class="upcoming-notes">{{ upcomingNotes }}</span>
+            <span class="upcoming-notes">{{ gamePlayState.rudiment?.visiblePattern }}</span>
          </div>
         </div>
-     </div>`,
+        <div class="row">
+          <div class="col-xs-2"></div>
+          <div class="col-xs-4 text-center">
+            <span class="message">
+              {{ gamePlayState.message }}
+            </span>
+          </div>
+        </div>
+      </div>`,
     styleUrls: ['./drum-stroke-info.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DrumStrokeInfoComponent implements OnInit, OnDestroy {
-
+export class DrumStrokeInfoComponent {
+  @Input() gamePlayState: GamePlayState;
 
   playedPatternMinusLastNote: string;
   playedLastNote: string;
   patternMinusLastNote: string;
   upcomingNotes: string;
   lastNote: string;
-  subscription: Subscription;
-  gamePlayState: GamePlayState;
-  constructor(private gamePlayMachine: GamePlayMachine, private detector: ChangeDetectorRef) { }
 
+  /*
   ngOnInit() {
     const self = this;
-    this.subscription = this.gamePlayMachine.gamePlayState.subscribe(
-      (gamePlayState: GamePlayState) => {
-        self.gamePlayState = gamePlayState;
         if (!gamePlayState.paused) {
           const currentNotePosition = gamePlayState.receivedPattern.length;
           self.playedLastNote = gamePlayState.receivedPattern.charAt(currentNotePosition - 1);
@@ -60,8 +59,5 @@ export class DrumStrokeInfoComponent implements OnInit, OnDestroy {
     self.detector.markForCheck();
   }
 
-  ngOnDestroy() {
-    console.log('destroying...');
-    this.subscription.unsubscribe();
-  }
+    */
 }

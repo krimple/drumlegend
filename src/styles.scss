@@ -4,8 +4,8 @@
 @import 'assets/fonts/Rock_Salt/RockSalt.ttf';
 
 .app-title {
-  font-family: 'Rock Salt', cursive;
-  font-size: 3em;
+  font-family: Arial,serif;
+  font-size: 6em;
   font-weight: bolder;
 }
 .btn-xlarge {
@@ -20,6 +20,24 @@
 p {
   font-size: 16pt;
 }
+
+span.score {
+  font-size: 3em;
+  color: #FFE9AA;
+  font-weight: bold;
+}
+span.score-value {
+  font-size: 3em;
+  color: #FFF;
+  font-weight: bold;
+}
+span.message {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 2em;
+  color: #FFF !important;
+  font-weight: normal;
+}
 /* You can add global styles to this file, and also import other style files */
 /* CSS - Cascading Style Sheet */
 /* Palette color codes */
@@ -28,11 +46,11 @@ p {
 /* Feel free to copy&paste color codes to your application */
 
 $primary-color: #486F88;
-$secondary-color: #D4B96A;
+$secondary-color: #FDE1B9;
 $tertiary-color: #FFC0AA;
 /* As hex codes */
 
-app-root.color-secondary-2-1 {}
+drumlegend-root.color-secondary-2-1 {}
 
 .color-primary-0 { color: #29526D }	/* Main Primary color */
 .color-primary-1 { color: #708FA3 }
@@ -40,8 +58,8 @@ app-root.color-secondary-2-1 {}
 .color-primary-3 { color: #123852 }
 .color-primary-4 { color: #032236 }
 
-.color-secondary-1-0 { color: #AA8C39 }	/* Main Secondary color (1) */
-.color-secondary-1-1 { color: #FFE9AA }
+.color-secondary-1-0 { color: #FDE1B9 }	/* Main Secondary color (1) */
+.color-secondary-1-1 { color: #FDE1B9 }
 .color-secondary-1-2 { color: #D4B96A }
 .color-secondary-1-3 { color: #806415 }
 .color-secondary-1-4 { color: #553F00 }

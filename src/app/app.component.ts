@@ -3,16 +3,12 @@ import { Observable } from 'rxjs';
 import {SynthesizerService} from "ng-webaudio-synthesizer";
 
 @Component({
-  selector: 'app-root',
+  selector: 'drumlegend-root',
   templateUrl: './app.component.html',
   styleUrls: [ './app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
-
+export class AppComponent {
+  // bootstrap the synth
   constructor(private synthService: SynthesizerService) { }
-
-  ngAfterViewInit() {
-  }
-
 }
 
