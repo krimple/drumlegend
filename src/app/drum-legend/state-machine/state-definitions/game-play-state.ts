@@ -14,6 +14,10 @@ export class GamePlayState {
   message: string;
   challengeTimeInSeconds: number;
   scoreLog: GamePlayLevelScoring[] = [];
+
+  isGameOver() {
+    return this.gameState === GameState.FINAL_SCORE;
+  }
 }
 
 export class GamePlayLevelScoring {

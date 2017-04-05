@@ -1,30 +1,40 @@
 import { Component, Input, OnInit, state, ViewEncapsulation } from '@angular/core';
-import {GamePlayMachine, GamePlayState} from './state-machine';
+import {GamePlayMachine, GameState, GamePlayState} from './state-machine';
 import {Observable} from 'rxjs';
 import 'rxjs/operator/debounceTime';
-import { SynthesizerService, SynthMessage, SynthNoteOn, TriggerSample } from 'ng-webaudio-synthesizer';
+import { SynthesizerService,
+         SynthMessage, SynthNoteOn,
+  TriggerSample } from 'ng-webaudio-synthesizer';
 
 @Component({
   selector: 'drumlegend-main',
   template: `
-    <div class="container absolute-center">
+    <div class="container absolute-center" 
+         *ngIf="gamePlayState$ | async; let gamePlayState">
       <div class="row title-row">
-        <div class="col-md-12"><h1 class="app-title">Drum Legend</h1></div>
+        <div class="col-md-12"><h1 class="app-title">Drum Legend {{ gamePlayState.gameState }}</h1></div>
      </div>
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8"
+                 *ngIf="gamePlayState?.gameState !== gameStateEnum.FINAL_SCORE">
           <drumlegend-gameplay-panel 
-              [gamePlayState]="gamePlayState$ | async"
+              [gamePlayState]="gamePlayState"
               (onPause)="stateMachine.pauseForMessages()"
               (onReset)="stateMachine.reset()"
               (onStroke)="stateMachine.sendStroke($event)"
           ></drumlegend-gameplay-panel>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-8" 
+           *ngIf="gamePlayState?.gameState === gameStateEnum.FINAL_SCORE">
+           <div class="jumbotron">
+            <h1>Game over!</h1>
+          </div>
+        </div>
+         <div class="col-md-4">
           <img width="100%" src="assets/drum-legend-splash-resized.jpg">
         </div>
       </div>
-     </div>
+    </div>
   `,
   styleUrls: [
     './drum-legend.component.scss'
@@ -33,6 +43,8 @@ import { SynthesizerService, SynthMessage, SynthNoteOn, TriggerSample } from 'ng
 })
 export class DrumLegendComponent implements OnInit {
   gamePlayState$: Observable<GamePlayState>;
+  // to access the enum in the template
+  gameStateEnum = GameState;
   constructor(stateMachine: GamePlayMachine,
               private gamePlayMachine: GamePlayMachine,
               private synthService: SynthesizerService) {
