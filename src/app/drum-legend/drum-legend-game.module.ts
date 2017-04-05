@@ -10,6 +10,7 @@ import {StateMachineModule} from './state-machine/state-machine-module';
 import {FormsModule} from '@angular/forms';
 import {DrumPatternInfoComponent} from './gameplay/drum-pattern-info.component';
 import {DrumStrokeInfoComponent} from './gameplay/drum-stroke-info.component';
+import {GameOverComponent} from './gameplay/drum-legend-game-over.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {DrumStrokeInfoComponent} from './gameplay/drum-stroke-info.component';
     DrumLegendGameplayPanelComponent,
     ScoringPanelComponent,
     DrumPatternInfoComponent,
-    DrumStrokeInfoComponent
+    DrumStrokeInfoComponent,
+    GameOverComponent
   ],
   imports: [
     CommonModule,

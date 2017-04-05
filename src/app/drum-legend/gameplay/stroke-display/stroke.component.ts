@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {Stroke, MatchState} from '../../models/stroke';
 @Component({
-  selector: 'stroke',
+  selector: 'drumlegend-stroke',
   styles: [
     `
     .stroke-matched {
@@ -24,7 +24,7 @@ import {Stroke, MatchState} from '../../models/stroke';
        </span>
   `
 })
-export class StrokeComponent implements OnChanges{
+export class StrokeComponent {
   matchState = MatchState;
   @Input() stroke: Stroke;
 }
