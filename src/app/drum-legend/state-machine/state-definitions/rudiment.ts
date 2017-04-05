@@ -59,7 +59,7 @@ export const RUDIMENTS: Rudiment[] = [
     name: 'Double Paraddidle',
     description: 'A paradiddle rhythm in three parts, this is often used to flip the leading hands in a drum rudiment',
     visiblePattern: 'R-L-R-L-R-R L-R-L-R-L-L',
-    pattern: 'LRLRLLRLRLRR',
+    pattern: 'RLRLRRLRLRLL',
     challengeTimeInSeconds: DEFAULT_CHALLENGE_TIME,
     points: 400
   },

@@ -3,7 +3,8 @@ import { Rudiment, RUDIMENTS } from '../state-definitions/rudiment';
 import { GamePlayLevelScoring, GamePlayState, GameState } from '../state-definitions/game-play-state';
 import * as game from '../actions/game-actions';
 
-const initialState: GamePlayState = {
+const initialState: GamePlayState =
+  Object.assign(new GamePlayState(), {
   levelScore: 0,
   totalScore: 0,
   receivedPattern: '',
@@ -17,7 +18,7 @@ const initialState: GamePlayState = {
   rudimentPosition: 0,
   challengeTimeInSeconds: RUDIMENTS[0].challengeTimeInSeconds,
   scoreLog: []
-};
+});
 
 
 
@@ -77,6 +78,7 @@ function processNextPattern(state) {
     rudimentId: rudimentId,
     rudiment: rudiment,
     receivedPattern: '',
+    displayedPattern: '',
     rudimentPosition: 0,
     levelScore: 0,
     matches: 0,
@@ -87,7 +89,7 @@ function processNextPattern(state) {
 
 function processSendStroke(state, action) {
   // first, if we're paused, do NOTHING
-  if (state.gameState === GameState.PAUSED) {
+  if (state.gameState !== GameState.PLAYING) {
     return state;
   }
 
@@ -120,6 +122,7 @@ function processSendStroke(state, action) {
     message = 'Oops, try again!';
     rudimentPosition = 0;
     updatedPattern = '';
+    displayedPattern = '';
   }
 
   // build up new state
