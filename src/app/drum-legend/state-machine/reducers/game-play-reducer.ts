@@ -23,7 +23,6 @@ const initialState: GamePlayState =
 
 
 export function gamePlayReducer(state = initialState, action: Action): GamePlayState {
-  console.log(`action type: ${action.type}`);
   switch (action.type) {
     case game.ActionTypes.RESET_GAME:
       return processBeginGame();
@@ -48,7 +47,6 @@ export function gamePlayReducer(state = initialState, action: Action): GamePlayS
     case game.ActionTypes.SEND_STROKE:
       return processSendStroke(state, action);
    default:
-      console.log('unknown action type', action);
       return state;
   }
 }

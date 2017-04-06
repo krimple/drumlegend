@@ -47,16 +47,12 @@ export class GameEffects {
 
   @Effect() triggerTimer$ = () => {
     const self = this;
-    console.log(`this is ${this}`);
     return this.actions$
       .ofType(actions.ActionTypes.NEXT_PATTERN)
       .withLatestFrom(self.store, (action, state: any) => {
-        console.dir(`Game State ${state.gamePlay.gameState}, rudiment: ${state.gamePlay.rudimentId}`);
         return state; // {  challengeTime: state.gamePlay.rudiment ? state.gamePlay.rudiment.challengeTimeInSeconds : 10};
       })
       .switchMap((state) => {
-        console.log(`*****  State for NEXT_PATTERN EFFECT`);
-        console.dir(state);
         if (state.gamePlay.rudimentId === -1 && state.gamePlay.gameState === GameState.PLAYING) {
           return Observable.of(new actions.EndGameAction());
         } else {

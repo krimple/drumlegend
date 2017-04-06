@@ -9,28 +9,54 @@ import { SynthesizerService,
 @Component({
   selector: 'drumlegend-main',
   template: `
-    <div class="container absolute-center" 
-         *ngIf="gamePlayState$ | async; let gamePlayState">
-      <div class="row title-row">
-        <div class="col-md-12"><h1 class="app-title">Drum Legend</h1></div>
-     </div>
-      <div class="row">
-        <div class="col-md-8"
-                 *ngIf="gamePlayState?.gameState !== gameStateEnum.FINAL_SCORE">
-          <drumlegend-gameplay-panel 
-              [gamePlayState]="gamePlayState"
-              (onPause)="stateMachine.pauseForMessages()"
-              (onReset)="stateMachine.reset()"
-              (onStroke)="stateMachine.sendStroke($event)"
-          ></drumlegend-gameplay-panel>
+    <div id="content-container"> 
+      <div id="game-play-container" *ngIf="gamePlayState?.gameState !== gameStateEnum.FINAL_SCORE">
+        <div id="info-bar">
+          <h2 id="score">Score:{{gamePlayState?.totalScore}}</h2>
+          <h2 id="timer">:{{gamePlayState?.timeLeft}} Secs</h2>
         </div>
-        <div class="col-md-8" 
-           *ngIf="gamePlayState?.gameState === gameStateEnum.FINAL_SCORE">
-           <drumlegend-game-over [gamePlayState]="gamePlayState"></drumlegend-game-over>
+        <div id="input-container">
+          <div class="user">
+            <h2>You:</h2>
+          </div>
+            <h2>{{ gamePlayState?.displayedPattern }}</h2>
         </div>
-         <div class="col-md-4">
-          <img width="100%" src="assets/drum-legend-splash-resized.jpg">
+        <div id="divider"></div>
+        <div id="pattern-container">
+          <div class="user">
+          <h2>Pattern:</h2> 
+          </div>
+          <h2>{{ gamePlayState?.rudiment?.visiblePattern }}</h2>
         </div>
+        
+        <div id="level-info">
+          <h3>Level {{ gamePlayState?.rudimentId + 1}}</h3>
+          <h3>{{ gamePlayState?.rudiment?.name }}</h3>
+          <h3>{{ gamePlayState?.rudiment?.visiblePattern }}</h3>
+          <hr>
+          <p>{{ gamePlayState?.rudiment?.description}}</p>
+        </div>
+      </div>
+      <div id="game-play-container" *ngIf="gamePlayState?.gameState === gameStateEnum.FINAL_SCORE">
+        <div id="info-bar">
+          <h2 id="score">Game over!</h2>
+        </div>
+        <div id="level-info">
+          <h3>Final Score:{{ gamePlayState.totalScore | number }}</h3>
+          <hr>
+          <div *ngFor="let level of gamePlayState.scoreLog">
+            <h3>
+               Rudiment - {{ level.rudiment.name }}</h3> 
+            <h4>
+               {{ level.matches }} matches 
+               for {{ level.levelScore | number }} points.
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div id="sidebar">
+        <img src="assets/drum-legend-app-splash-art.jpg">
+        <h3>Drum Legend</h3>
       </div>
     </div>
   `,
@@ -40,13 +66,12 @@ import { SynthesizerService,
   host: {'(window:keydown)': 'interceptKey($event)'},
 })
 export class DrumLegendComponent implements OnInit {
-  gamePlayState$: Observable<GamePlayState>;
+  @Input() gamePlayState: GamePlayState;
   // to access the enum in the template
   gameStateEnum = GameState;
   constructor(stateMachine: GamePlayMachine,
               private gamePlayMachine: GamePlayMachine,
               private synthService: SynthesizerService) {
-    this.gamePlayState$ = stateMachine.gamePlayState;
     gamePlayMachine.play();
   }
 
@@ -58,7 +83,7 @@ export class DrumLegendComponent implements OnInit {
     // only snare and tom1 will generate strokes
     this.synthService.synthStream$
       .filter((message: SynthMessage) => message instanceof TriggerSample)
-      .debounceTime(100)
+      .debounceTime(30)
       .subscribe(
         (triggerSample: TriggerSample) => {
           switch (triggerSample.instrument) {
@@ -84,7 +109,7 @@ export class DrumLegendComponent implements OnInit {
     if ($event.key === 'r' || $event.key === 'R' || $event.key === 'ArrowRight') {
       this.synthService.synthStream$.next(new TriggerSample('tom1', 255));
     }
-    if($event.key === 'Escape') {
+    if ($event.key === 'Escape') {
       this.gamePlayMachine.resetGame();
     }
   }

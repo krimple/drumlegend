@@ -1,25 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProgressMeterComponent } from '../shared/progress-meter/progress-meter.component';
 import {DrumLegendComponent} from './drum-legend.component';
 import {SynthesizerModule} from 'ng-webaudio-synthesizer';
-import {DrumLegendGameplayPanelComponent} from './gameplay/drum-legend-gameplay-panel.component';
-import {ScoringPanelComponent} from './gameplay/scoring/scoring-panel.component';
 import {GamePlayMachine} from './state-machine/game-play-machine';
 import {StateMachineModule} from './state-machine/state-machine-module';
 import {FormsModule} from '@angular/forms';
-import {DrumPatternInfoComponent} from './gameplay/drum-pattern-info.component';
-import {DrumStrokeInfoComponent} from './gameplay/drum-stroke-info.component';
-import {GameOverComponent} from './gameplay/drum-legend-game-over.component';
+import {DrumLegendContainerComponent} from './drum-legend-container.component';
 
 @NgModule({
   declarations: [
+    DrumLegendContainerComponent,
     DrumLegendComponent,
-    DrumLegendGameplayPanelComponent,
-    ScoringPanelComponent,
-    DrumPatternInfoComponent,
-    DrumStrokeInfoComponent,
-    GameOverComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +19,7 @@ import {GameOverComponent} from './gameplay/drum-legend-game-over.component';
     StateMachineModule
   ],
   exports: [
-    DrumLegendComponent,
+    DrumLegendContainerComponent
   ],
   providers: [
     GamePlayMachine
