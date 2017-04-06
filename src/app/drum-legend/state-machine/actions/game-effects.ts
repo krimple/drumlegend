@@ -6,7 +6,7 @@ import 'rxjs/operator/do';
 import { Store } from '@ngrx/store';
 import { GamePlayState, GameState } from '../state-definitions/game-play-state';
 
-const TICK = 3000;
+const TICK = 1000;
 
 @Injectable()
 export class GameEffects {
@@ -55,10 +55,12 @@ export class GameEffects {
         return state; // {  challengeTime: state.gamePlay.rudiment ? state.gamePlay.rudiment.challengeTimeInSeconds : 10};
       })
       .switchMap((state) => {
+        console.log(`*****  State for NEXT_PATTERN EFFECT`);
+        console.dir(state);
         if (state.gamePlay.rudimentId === -1 && state.gamePlay.gameState === GameState.PLAYING) {
           return Observable.of(new actions.EndGameAction());
         } else {
-          return Observable.of(new actions.TimerDecrementAction(state.gamePlay.challengeTimeInSeconds));
+          return Observable.of(new actions.StartTimerAction(state.gamePlay.challengeTimeInSeconds));
         }
       });
   };

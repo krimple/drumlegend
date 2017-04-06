@@ -7,7 +7,7 @@ export class Rudiment {
   challengeTimeInSeconds: number;
 }
 
-export const DEFAULT_CHALLENGE_TIME = 2;
+export const DEFAULT_CHALLENGE_TIME = 15;
 
 export const RUDIMENTS: Rudiment[] = [
   {

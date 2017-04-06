@@ -12,7 +12,7 @@ import { SynthesizerService,
     <div class="container absolute-center" 
          *ngIf="gamePlayState$ | async; let gamePlayState">
       <div class="row title-row">
-        <div class="col-md-12"><h1 class="app-title">Drum Legend {{ gamePlayState.gameState }}</h1></div>
+        <div class="col-md-12"><h1 class="app-title">Drum Legend</h1></div>
      </div>
       <div class="row">
         <div class="col-md-8"
@@ -26,9 +26,7 @@ import { SynthesizerService,
         </div>
         <div class="col-md-8" 
            *ngIf="gamePlayState?.gameState === gameStateEnum.FINAL_SCORE">
-           <div class="jumbotron">
-            <h1>Game over!</h1>
-          </div>
+           <drumlegend-game-over [gamePlayState]="gamePlayState"></drumlegend-game-over>
         </div>
          <div class="col-md-4">
           <img width="100%" src="assets/drum-legend-splash-resized.jpg">
