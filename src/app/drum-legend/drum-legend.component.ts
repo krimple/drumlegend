@@ -3,7 +3,7 @@ import {GamePlayMachine, GameState, GamePlayState} from './state-machine';
 import {Observable} from 'rxjs';
 import 'rxjs/operator/debounceTime';
 import { SynthesizerService,
-         SynthMessage, SynthNoteOn,
+         SynthMessage, WaveformChange, SynthNoteOn,
   TriggerSample } from 'ng-webaudio-synthesizer';
 
 @Component({
@@ -72,6 +72,7 @@ export class DrumLegendComponent implements OnInit {
   constructor(stateMachine: GamePlayMachine,
               private gamePlayMachine: GamePlayMachine,
               private synthService: SynthesizerService) {
+    synthService.synthStream$.next(new WaveformChange(3));
     gamePlayMachine.play();
   }
 

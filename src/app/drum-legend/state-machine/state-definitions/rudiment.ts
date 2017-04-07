@@ -7,7 +7,7 @@ export class Rudiment {
   challengeTimeInSeconds: number;
 }
 
-export const DEFAULT_CHALLENGE_TIME = 5;
+export const DEFAULT_CHALLENGE_TIME = 15;
 
 export const RUDIMENTS: Rudiment[] = [
   {
@@ -26,7 +26,6 @@ export const RUDIMENTS: Rudiment[] = [
     challengeTimeInSeconds: DEFAULT_CHALLENGE_TIME,
     points: 100
   },
-  /*
   {
     name: 'Paradiddle',
     description: 'This rudiment allows for switching of the leading hand every ' +
@@ -115,5 +114,4 @@ export const RUDIMENTS: Rudiment[] = [
     challengeTimeInSeconds: DEFAULT_CHALLENGE_TIME,
     points: 1200
   }
-  */
 ];
