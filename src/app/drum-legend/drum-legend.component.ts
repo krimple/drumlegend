@@ -1,16 +1,18 @@
 import { Component, Input, OnInit, state, ViewEncapsulation } from '@angular/core';
-import {GamePlayMachine, GameState, GamePlayState} from './state-machine';
+import { GamePlayMachine, GameState, GamePlayState } from './state-machine';
 import { DrumMachineService } from './midi-input/drum-machine.service';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import 'rxjs/operator/debounceTime';
-import { SynthesizerService,
-         SynthMessage, WaveformChange, SynthNoteOn,
-  TriggerSample } from 'ng-webaudio-synthesizer';
+import {
+  SynthesizerService,
+  SynthMessage, WaveformChange, SynthNoteOn,
+  TriggerSample
+} from 'ng-webaudio-synthesizer';
 
 @Component({
   selector: 'drumlegend-main',
   template: `
-    <div id="content-container"> 
+    <div id="content-container">
       <div id="game-play-container" *ngIf="gamePlayState?.gameState !== gameStateEnum.FINAL_SCORE">
         <div id="info-bar">
           <h2 id="score">Score:{{gamePlayState?.totalScore}}</h2>
@@ -20,16 +22,16 @@ import { SynthesizerService,
           <div class="user">
             <h2>You:</h2>
           </div>
-            <h2>{{ gamePlayState?.displayedPattern }}</h2>
+          <h2>{{ gamePlayState?.displayedPattern }}</h2>
         </div>
         <div id="divider"></div>
         <div id="pattern-container">
           <div class="user">
-          <h2>Pattern:</h2> 
+            <h2>Pattern:</h2>
           </div>
           <h2>{{ gamePlayState?.rudiment?.visiblePattern }}</h2>
         </div>
-        
+
         <div id="level-info">
           <h3>Level {{ gamePlayState?.rudimentId + 1}}</h3>
           <h3>{{ gamePlayState?.rudiment?.name }}</h3>
@@ -47,10 +49,10 @@ import { SynthesizerService,
           <hr>
           <div *ngFor="let level of gamePlayState.scoreLog">
             <h3>
-               Rudiment - {{ level.rudiment.name }}</h3> 
+              Rudiment - {{ level.rudiment.name }}</h3>
             <h4>
-               {{ level.matches }} matches 
-               for {{ level.levelScore | number }} points.
+              {{ level.matches }} matches
+              for {{ level.levelScore | number }} points.
             </h4>
           </div>
         </div>
@@ -70,7 +72,8 @@ export class DrumLegendComponent implements OnInit {
   @Input() gamePlayState: GamePlayState;
   // to access the enum in the template
   gameStateEnum = GameState;
-  constructor(private drumMachineService: DrumMachineService, 
+
+  constructor(private drumMachineService: DrumMachineService,
               stateMachine: GamePlayMachine,
               private gamePlayMachine: GamePlayMachine) {
     gamePlayMachine.play();
@@ -83,20 +86,20 @@ export class DrumLegendComponent implements OnInit {
     // hook synth service into game
     // only snare and tom1 will generate strokes
     /*this.synthService.synthStream$
-      .filter((message: SynthMessage) => message instanceof TriggerSample)
-      .debounceTime(30)
-      .subscribe(
-        (triggerSample: TriggerSample) => {
-          switch (triggerSample.instrument) {
-            case 'snare':
-              this.gamePlayMachine.sendStroke('L');
-              break;
-            case 'tom1':
-              this.gamePlayMachine.sendStroke('R');
-              break;
-          }
-        }
-      );*/
+     .filter((message: SynthMessage) => message instanceof TriggerSample)
+     .debounceTime(30)
+     .subscribe(
+     (triggerSample: TriggerSample) => {
+     switch (triggerSample.instrument) {
+     case 'snare':
+     this.gamePlayMachine.sendStroke('L');
+     break;
+     case 'tom1':
+     this.gamePlayMachine.sendStroke('R');
+     break;
+     }
+     }
+     );*/
   }
 
   // for non-gamepad-connected play:
