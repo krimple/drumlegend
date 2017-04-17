@@ -5,6 +5,7 @@ import {SynthesizerModule} from 'ng-webaudio-synthesizer';
 import {GamePlayMachine} from './state-machine/game-play-machine';
 import {StateMachineModule} from './state-machine/state-machine-module';
 import {FormsModule} from '@angular/forms';
+import { DrumMachineService } from './midi-input/drum-machine.service';
 import {DrumLegendContainerComponent} from './drum-legend-container.component';
 
 @NgModule({
@@ -22,7 +23,8 @@ import {DrumLegendContainerComponent} from './drum-legend-container.component';
     DrumLegendContainerComponent
   ],
   providers: [
-    GamePlayMachine
+    GamePlayMachine,
+    DrumMachineService
   ]
 })
 export class DrumLegendGameModule { }

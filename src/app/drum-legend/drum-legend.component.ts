@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, state, ViewEncapsulation } from '@angular/core';
 import {GamePlayMachine, GameState, GamePlayState} from './state-machine';
+import { DrumMachineService } from './midi-input/drum-machine.service';
 import {Observable} from 'rxjs';
 import 'rxjs/operator/debounceTime';
 import { SynthesizerService,
@@ -69,10 +70,9 @@ export class DrumLegendComponent implements OnInit {
   @Input() gamePlayState: GamePlayState;
   // to access the enum in the template
   gameStateEnum = GameState;
-  constructor(stateMachine: GamePlayMachine,
-              private gamePlayMachine: GamePlayMachine,
-              private synthService: SynthesizerService) {
-    synthService.synthStream$.next(new WaveformChange(3));
+  constructor(private drumMachineService: DrumMachineService, 
+              stateMachine: GamePlayMachine,
+              private gamePlayMachine: GamePlayMachine) {
     gamePlayMachine.play();
   }
 
@@ -82,7 +82,7 @@ export class DrumLegendComponent implements OnInit {
     // TODO watch for muting
     // hook synth service into game
     // only snare and tom1 will generate strokes
-    this.synthService.synthStream$
+    /*this.synthService.synthStream$
       .filter((message: SynthMessage) => message instanceof TriggerSample)
       .debounceTime(30)
       .subscribe(
@@ -96,7 +96,7 @@ export class DrumLegendComponent implements OnInit {
               break;
           }
         }
-      );
+      );*/
   }
 
   // for non-gamepad-connected play:
@@ -105,10 +105,10 @@ export class DrumLegendComponent implements OnInit {
   // to the stream for trigger samples
   interceptKey($event: KeyboardEvent) {
     if ($event.key === 'l' || $event.key === 'L' || $event.key === 'ArrowLeft') {
-      this.synthService.synthStream$.next(new TriggerSample('snare', 255));
+      this.drumMachineService.triggerStroke('left');
     }
     if ($event.key === 'r' || $event.key === 'R' || $event.key === 'ArrowRight') {
-      this.synthService.synthStream$.next(new TriggerSample('tom1', 255));
+      this.drumMachineService.triggerStroke('right');
     }
     if ($event.key === 'Escape') {
       this.gamePlayMachine.resetGame();
