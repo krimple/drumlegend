@@ -1,6 +1,5 @@
-import {Component, AfterViewInit, ViewEncapsulation} from '@angular/core';
-import { Observable } from 'rxjs';
-import {SynthesizerService} from "ng-webaudio-synthesizer";
+import {Component } from '@angular/core';
+import { MidiInputProcessorService } from './drum-legend/synthesizer/midi-input-processor.service';
 
 @Component({
   selector: 'drumlegend-root',
@@ -8,7 +7,6 @@ import {SynthesizerService} from "ng-webaudio-synthesizer";
   styleUrls: [ './app.component.scss']
 })
 export class AppComponent {
-  // bootstrap the synth
-  constructor(private synthService: SynthesizerService) { }
+  constructor() { }
 }
 

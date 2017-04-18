@@ -6,7 +6,8 @@ import { GamePlayMachine } from '../state-machine';
 
 @Injectable()
 export class DrumMachineService {
-  readonly drumStrokeStream$: Subject<string> = new Subject<string>();
+  drumStrokeStream$: Subject<string> = new Subject<string>();
+
   leftBuffer = new Tone.Sampler('./assets/drums/short-snare.wav', () => {
     const self = this;
     this.drumStrokeStream$
@@ -14,9 +15,9 @@ export class DrumMachineService {
         return data === 'left';
       }).subscribe(() => {
       self.gamePlayMachine.sendStroke('L');
-      self.leftBuffer.toMaster().triggerAttack();
+      self.leftBuffer.triggerAttackRelease();
     });
-  });
+  }).toMaster();
 
   rightBuffer = new Tone.Sampler('./assets/drums/hi-tom-normal.wav', () => {
     const self = this;
@@ -25,12 +26,11 @@ export class DrumMachineService {
         return data === 'right';
       }).subscribe(() => {
       self.gamePlayMachine.sendStroke('R');
-      self.rightBuffer.toMaster().triggerAttack();
+      self.rightBuffer.triggerAttackRelease();
     });
-  });
+  }).toMaster();
 
-  constructor(private gamePlayMachine: GamePlayMachine,
-              private http: Http, private zone: NgZone) {
+  constructor(private gamePlayMachine: GamePlayMachine) {
     // debugging the tone library
     window['Tone'] = Tone;
   }

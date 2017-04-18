@@ -1,13 +1,8 @@
-import { Component, Input, OnInit, state, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { GamePlayMachine, GameState, GamePlayState } from './state-machine';
-import { DrumMachineService } from './midi-input/drum-machine.service';
-import { Observable } from 'rxjs';
+import { DrumMachineService } from './synthesizer/drum-machine.service';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/operator/debounceTime';
-import {
-  SynthesizerService,
-  SynthMessage, WaveformChange, SynthNoteOn,
-  TriggerSample
-} from 'ng-webaudio-synthesizer';
 
 @Component({
   selector: 'drumlegend-main',
@@ -66,7 +61,6 @@ import {
   styleUrls: [
     './drum-legend.component.scss'
   ],
-  host: {'(window:keydown)': 'interceptKey($event)'},
 })
 export class DrumLegendComponent implements OnInit {
   @Input() gamePlayState: GamePlayState;
@@ -74,7 +68,6 @@ export class DrumLegendComponent implements OnInit {
   gameStateEnum = GameState;
 
   constructor(private drumMachineService: DrumMachineService,
-              stateMachine: GamePlayMachine,
               private gamePlayMachine: GamePlayMachine) {
     gamePlayMachine.play();
   }
@@ -82,7 +75,6 @@ export class DrumLegendComponent implements OnInit {
   ngOnInit() {
     const self = this;
 
-    // TODO watch for muting
     // hook synth service into game
     // only snare and tom1 will generate strokes
     /*this.synthService.synthStream$
@@ -106,14 +98,14 @@ export class DrumLegendComponent implements OnInit {
   // hook keystrokes into note generation. If a key is struck,
   // send it into the synth (which makes it observable above in the suscription
   // to the stream for trigger samples
-  interceptKey($event: KeyboardEvent) {
-    if ($event.key === 'l' || $event.key === 'L' || $event.key === 'ArrowLeft') {
+  @HostListener('window:keydown', ['$event.key']) interceptKey(key: string) {
+    if (key === 'l' || key === 'L' || key === 'ArrowLeft') {
       this.drumMachineService.triggerStroke('left');
     }
-    if ($event.key === 'r' || $event.key === 'R' || $event.key === 'ArrowRight') {
+    if (key === 'r' || key === 'R' || key === 'ArrowRight') {
       this.drumMachineService.triggerStroke('right');
     }
-    if ($event.key === 'Escape') {
+    if (key === 'Escape') {
       this.gamePlayMachine.resetGame();
     }
   }
