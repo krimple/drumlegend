@@ -14,7 +14,7 @@ export class Mpk225Adapter extends Adapter {
   reverb: any;
   gain: any;
 
-  constructor(private zone: NgZone) {
+  constructor(public zone: NgZone) {
     super();
     this.reverb = new Tone.JCReverb(0.6).connect(Tone.Master);
     this.vibrato = new Tone.Vibrato(5, 0);
@@ -30,13 +30,14 @@ export class Mpk225Adapter extends Adapter {
     // drum machine code separate from regular keyboard subscription
     mpkMessages.filter((message: MidiMessage) => message.channel === 9 && message.velocity > 0)
                .debounceTime(20).subscribe((message: MidiMessage) => {
-      if (message.noteNumber === 41) {
+      let stroke;
+      switch (message.noteNumber) {
+        case 41: stroke = 'right'; break;
+        case 40: stroke = 'left'; break;
+      }
+      if (stroke) {
         self.zone.run(() => {
-          destination.next('right');
-        });
-      } else if (message.noteNumber === 40) {
-        self.zone.run(() => {
-          destination.next('left');
+          destination.next(stroke);
         });
       }
     });
@@ -46,16 +47,16 @@ export class Mpk225Adapter extends Adapter {
       switch (message.messageType) {
         case MidiMessageType.VM_KEY_DOWN:
           if (message.channel === 0 ) {
-            setTimeout(() => {
+            setTimeout(function () {
               self.synth.triggerAttack(message.noteName, 0, 0.7 + (message.velocity / 127) * 0.3);
-            });
+            }, 0);
           }
           break;
         case MidiMessageType.VM_KEY_UP:
           if (message.channel === 0 && message.velocity === 0) {
-            setTimeout(() => {
+            setTimeout(function() {
               self.synth.triggerRelease(message.noteName);
-            });
+            }, 0);
           }
           break;
         case MidiMessageType.PITCHBEND:
