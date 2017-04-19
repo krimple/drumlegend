@@ -12,6 +12,7 @@ export class Mpk225Adapter extends Adapter {
   synth: any;
   vibrato: any;
   reverb: any;
+  limiter: any;
   gain: any;
 
   constructor(private zone: NgZone) {
@@ -19,7 +20,8 @@ export class Mpk225Adapter extends Adapter {
     this.reverb = new Tone.JCReverb(0.6).connect(Tone.Master);
     this.vibrato = new Tone.Vibrato(5, 0);
     this.gain = new Tone.Gain(1);
-    this.synth = new Tone.PolySynth(8, Tone.MonoSynth).chain(this.vibrato, this.reverb, this.gain, Tone.Master);
+    this.limiter = new Tone.Limiter(1);
+    this.synth = new Tone.PolySynth(8, Tone.AMSynth).chain(this.vibrato, this.reverb, this.gain, this.limiter, Tone.Master);
 
   }
   adapt(messageStream$: Observable<MidiMessage>, destination?: Subject<string>): void {
@@ -46,16 +48,14 @@ export class Mpk225Adapter extends Adapter {
       switch (message.messageType) {
         case MidiMessageType.VM_KEY_DOWN:
           if (message.channel === 0 ) {
-            setTimeout(() => {
+              console.log(`Attacking note ${message.noteName}`);
               self.synth.triggerAttack(message.noteName, 0, 0.7 + (message.velocity / 127) * 0.3);
-            });
           }
           break;
         case MidiMessageType.VM_KEY_UP:
           if (message.channel === 0 && message.velocity === 0) {
-            setTimeout(() => {
+              console.log(`Releasing note ${message.noteName}`);
               self.synth.triggerRelease(message.noteName);
-            });
           }
           break;
         case MidiMessageType.PITCHBEND:
@@ -67,7 +67,7 @@ export class Mpk225Adapter extends Adapter {
               self.vibrato.set('depth', (message.messageRawData[2] / 64));
               break;
             case 7:
-              const volume = 6 * (message.messageRawData[2] / 127);
+              const volume = (message.messageRawData[2] / 127);
               console.log('adjusting volume to', volume);
               self.gain.set('gain', volume);
               break;
