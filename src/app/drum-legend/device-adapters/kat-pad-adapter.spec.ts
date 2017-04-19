@@ -1,9 +1,9 @@
+import {Subject, ReplaySubject} from 'rxjs';
+import {CommonModule} from '@angular/common';
 import {KatPadAdapter} from './kat-pad-adapter';
 import createSpy = jasmine.createSpy;
-import {getTestBed, inject, tick, TestBed, fakeAsync} from '@angular/core/testing';
-import {Subject, ReplaySubject} from 'rxjs';
-import {DeviceCategory, MidiMessage} from '../midi-message';
-import {CommonModule} from '@angular/common';
+import {getTestBed, tick, TestBed, fakeAsync} from '@angular/core/testing';
+import {DeviceCategory, MidiMessage} from '../synthesizer/midi-message';
 
 describe('Kat Pad Adapter', () => {
   let katPadAdapter: KatPadAdapter;
@@ -21,8 +21,7 @@ describe('Kat Pad Adapter', () => {
 
   it('should react to left and right messages', fakeAsync(() => {
     const midiMessage$: Subject<MidiMessage> = new Subject<MidiMessage>();
-
-    const messages$ = new ReplaySubject<string>(2);
+    const messages$ = new ReplaySubject<string>(20);
     const data: string[] = [];
     const subscription = messages$.subscribe(
       (datum: string) => {

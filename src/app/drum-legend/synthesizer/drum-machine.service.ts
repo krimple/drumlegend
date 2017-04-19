@@ -1,12 +1,11 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { Http } from '@angular/http';
 import * as Tone from 'tone';
 import { GamePlayMachine } from '../state-machine';
 
 @Injectable()
 export class DrumMachineService {
-  drumStrokeStream$: Subject<string> = new Subject<string>();
+  drumStrokeStream$: Subject<string>;
 
   gain = new Tone.Gain( { gain: 10 });
   leftBuffer = new Tone.Sampler('./assets/drums/short-snare.wav', () => {
@@ -15,7 +14,7 @@ export class DrumMachineService {
       .filter((data: string) => {
         return data === 'left';
       }).subscribe(() => {
-      self.gamePlayMachine.sendStroke('L');
+      self.triggerStroke('L');
       self.leftBuffer.triggerAttackRelease();
     });
   });
@@ -26,17 +25,19 @@ export class DrumMachineService {
       .filter((data: string) => {
         return data === 'right';
       }).subscribe(() => {
-      self.gamePlayMachine.sendStroke('R');
+      self.triggerStroke('R');
       self.rightBuffer.triggerAttackRelease();
     });
   });
 
-  constructor(private gamePlayMachine: GamePlayMachine) {
-    // debugging the tone library
-    window['Tone'] = Tone;
+  constructor() {
     this.leftBuffer.chain(this.gain, Tone.Master);
     this.rightBuffer.chain(this.gain, Tone.Master);
 
+  }
+
+  initStream(drumStrokeStream$: Subject<string>) {
+   this.drumStrokeStream$ = drumStrokeStream$;
   }
 
   triggerStroke(stroke: string) {

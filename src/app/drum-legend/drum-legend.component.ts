@@ -1,6 +1,6 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { GamePlayMachine, GameState, GamePlayState } from './state-machine';
-import { DrumMachineService } from './synthesizer/drum-machine.service';
+import { DrumMachineService } from './synthesizer';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/operator/debounceTime';
 
@@ -62,7 +62,7 @@ import 'rxjs/operator/debounceTime';
     './drum-legend.component.scss'
   ],
 })
-export class DrumLegendComponent implements OnInit {
+export class DrumLegendComponent {
   @Input() gamePlayState: GamePlayState;
   // to access the enum in the template
   gameStateEnum = GameState;
@@ -72,28 +72,6 @@ export class DrumLegendComponent implements OnInit {
     gamePlayMachine.play();
   }
 
-  ngOnInit() {
-    const self = this;
-
-    // hook synth service into game
-    // only snare and tom1 will generate strokes
-    /*this.synthService.synthStream$
-     .filter((message: SynthMessage) => message instanceof TriggerSample)
-     .debounceTime(30)
-     .subscribe(
-     (triggerSample: TriggerSample) => {
-     switch (triggerSample.instrument) {
-     case 'snare':
-     this.gamePlayMachine.sendStroke('L');
-     break;
-     case 'tom1':
-     this.gamePlayMachine.sendStroke('R');
-     break;
-     }
-     }
-     );*/
-  }
-
   // for non-gamepad-connected play:
   // hook keystrokes into note generation. If a key is struck,
   // send it into the synth (which makes it observable above in the suscription
@@ -101,9 +79,11 @@ export class DrumLegendComponent implements OnInit {
   @HostListener('window:keydown', ['$event.key']) interceptKey(key: string) {
     if (key === 'l' || key === 'L' || key === 'ArrowLeft') {
       this.drumMachineService.triggerStroke('left');
+      this.gamePlayMachine.sendStroke('L');
     }
     if (key === 'r' || key === 'R' || key === 'ArrowRight') {
       this.drumMachineService.triggerStroke('right');
+      this.gamePlayMachine.sendStroke('R');
     }
     if (key === 'Escape') {
       this.gamePlayMachine.resetGame();

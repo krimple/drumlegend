@@ -56,7 +56,7 @@ export class GameEffects {
     return this.actions$
       .ofType(actions.ActionTypes.NEXT_PATTERN)
       .withLatestFrom(self.store, (action, state: any) => {
-        return state; // {  challengeTime: state.gamePlay.rudiment ? state.gamePlay.rudiment.challengeTimeInSeconds : 10};
+        return state;
       })
       .switchMap((state) => {
         if (state.gamePlay.rudimentId === -1 && state.gamePlay.gameState === GameState.PLAYING) {
