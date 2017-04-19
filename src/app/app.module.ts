@@ -1,12 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { SynthesizerModule } from 'ng-webaudio-synthesizer';
 import { AppComponent } from './app.component';
-import { DrumLegendGameModule } from './drum-legend/drum-legend-game.module';
-
+import { DrumLegendGameModule } from './drum-legend';
 
 @NgModule({
   declarations: [
@@ -14,9 +13,9 @@ import { DrumLegendGameModule } from './drum-legend/drum-legend-game.module';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     HttpModule,
-    SynthesizerModule,
     DrumLegendGameModule
   ],
   providers: [],

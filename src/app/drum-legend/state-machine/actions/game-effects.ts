@@ -3,6 +3,12 @@ import * as actions from '../actions/game-actions';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/operator/do';
+import 'rxjs/add/observable/concat';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/timer';
 import { Store } from '@ngrx/store';
 import { GamePlayState, GameState } from '../state-definitions/game-play-state';
 
@@ -50,7 +56,7 @@ export class GameEffects {
     return this.actions$
       .ofType(actions.ActionTypes.NEXT_PATTERN)
       .withLatestFrom(self.store, (action, state: any) => {
-        return state; // {  challengeTime: state.gamePlay.rudiment ? state.gamePlay.rudiment.challengeTimeInSeconds : 10};
+        return state;
       })
       .switchMap((state) => {
         if (state.gamePlay.rudimentId === -1 && state.gamePlay.gameState === GameState.PLAYING) {

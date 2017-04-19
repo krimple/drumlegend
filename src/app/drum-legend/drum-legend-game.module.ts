@@ -1,28 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {DrumLegendComponent} from './drum-legend.component';
-import {SynthesizerModule} from 'ng-webaudio-synthesizer';
-import {GamePlayMachine} from './state-machine/game-play-machine';
-import {StateMachineModule} from './state-machine/state-machine-module';
-import {FormsModule} from '@angular/forms';
-import {DrumLegendContainerComponent} from './drum-legend-container.component';
+import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
+import { DrumLegendComponent } from './drum-legend.component';
+import { SynthesizerModule } from './synthesizer';
+import { StateMachineModule } from './state-machine';
+import { DrumLegendContainerComponent } from './drum-legend-container.component';
+import { DeviceAdapterModule } from './device-adapters/device-adapter.module';
 
 @NgModule({
   declarations: [
     DrumLegendContainerComponent,
-    DrumLegendComponent,
+    DrumLegendComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    SynthesizerModule,
-    StateMachineModule
+    HttpModule,
+    DeviceAdapterModule,
+    SynthesizerModule.forRoot(),
+    StateMachineModule.forRoot()
   ],
   exports: [
     DrumLegendContainerComponent
   ],
   providers: [
-    GamePlayMachine
   ]
 })
-export class DrumLegendGameModule { }
+export class DrumLegendGameModule {
+}

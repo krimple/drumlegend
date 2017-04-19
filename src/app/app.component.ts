@@ -1,14 +1,9 @@
-import {Component, AfterViewInit, ViewEncapsulation} from '@angular/core';
-import { Observable } from 'rxjs';
-import {SynthesizerService} from "ng-webaudio-synthesizer";
+import {Component } from '@angular/core';
 
 @Component({
   selector: 'drumlegend-root',
-  templateUrl: './app.component.html',
-  styleUrls: [ './app.component.scss']
+  template: `<drumlegend-container></drumlegend-container>`
 })
 export class AppComponent {
-  // bootstrap the synth
-  constructor(private synthService: SynthesizerService) { }
 }
 
