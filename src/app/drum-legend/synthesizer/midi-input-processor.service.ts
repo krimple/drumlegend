@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
 import { NgZone } from '@angular/core';
 import { MidiMessage } from './midi-message';
-import { Mpk225Adapter } from './adapters/mpk225.adapter';
+import { Mpk225Adapter } from './adapters/mpk225-adapter';
 import { Adapter } from './adapters/adapter';
 import { KatPadAdapter } from './adapters/kat-pad-adapter';
 
