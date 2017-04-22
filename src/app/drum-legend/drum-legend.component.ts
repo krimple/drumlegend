@@ -1,7 +1,6 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { GamePlayMachine, GameState, GamePlayState } from './state-machine';
 import { DrumMachineService } from './synthesizer';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/operator/debounceTime';
 
 @Component({

@@ -6,15 +6,13 @@ import { gamePlayReducer } from './reducers/game-play-reducer';
 import { GamePlayMachine } from './game-play-machine';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-const store = StoreModule.provideStore({ gamePlay: gamePlayReducer });
+export const store = StoreModule.provideStore({ gamePlay: gamePlayReducer });
 
 @NgModule({
   imports: [
     store,
     EffectsModule.run(GameEffects),
-    StoreDevtoolsModule.instrumentOnlyWithExtension({
-      maxAge: 100
-    })
+    StoreDevtoolsModule.instrumentStore()
   ]
 })
 export class StateMachineModule {

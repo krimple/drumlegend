@@ -3,7 +3,6 @@ import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { HttpModule } from '@angular/http';
 import { DrumLegendGameModule } from './drum-legend/drum-legend-game.module';
-import { AppModule } from './app.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {

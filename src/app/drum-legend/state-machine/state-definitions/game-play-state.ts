@@ -1,5 +1,5 @@
 import {Rudiment} from './rudiment';
-export enum GameState { NOT_STARTED, PAUSED, PLAYING, SHOWING_MESSAGES, FINAL_SCORE };
+export enum GameState { NOT_STARTED, PAUSED, PLAYING, FINAL_SCORE };
 export class GamePlayState {
   rudiment: Rudiment;
   receivedPattern: string;

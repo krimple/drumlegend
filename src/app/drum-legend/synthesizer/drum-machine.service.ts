@@ -1,7 +1,6 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import * as Tone from 'tone';
-import { GamePlayMachine } from '../state-machine';
 
 @Injectable()
 export class DrumMachineService {

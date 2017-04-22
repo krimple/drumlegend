@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Rudiment, RUDIMENTS } from '../state-definitions/rudiment';
+import { RUDIMENTS } from '../state-definitions/rudiment';
 import { GamePlayLevelScoring, GamePlayState, GameState } from '../state-definitions/game-play-state';
 import * as game from '../actions/game-actions';
 
@@ -22,7 +22,7 @@ const initialState: GamePlayState =
 
 
 
-export function gamePlayReducer(state = initialState, action: Action): GamePlayState {
+export function gamePlayReducer(state: GamePlayState = initialState, action: Action): GamePlayState {
   switch (action.type) {
     case game.ActionTypes.RESET_GAME:
       return processBeginGame();
@@ -124,7 +124,7 @@ function processSendStroke(state, action) {
   }
 
   // build up new state
-  const newState: GamePlayState = Object.assign({}, state, {
+  return Object.assign(new GamePlayState(), state, {
     receivedPattern: updatedPattern,
     displayedPattern: displayedPattern,
     message: message,
@@ -134,7 +134,6 @@ function processSendStroke(state, action) {
     matches: matches
   });
 
-  return newState;
 }
 
 

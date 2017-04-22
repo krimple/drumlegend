@@ -1,5 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
 import * as Tone from 'tone';
 
 @Injectable()

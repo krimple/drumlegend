@@ -16,6 +16,7 @@ const TICK = 1000;
 
 @Injectable()
 export class GameEffects {
+
   @Effect() resetGame$ = this.actions$
     .ofType(actions.ActionTypes.RESET_GAME)
     .switchMap(() => Observable.concat([

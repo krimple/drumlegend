@@ -1,7 +1,7 @@
 import {CommonModule} from '@angular/common';
 import {Mpk225Adapter} from './mpk225-adapter';
 import createSpy = jasmine.createSpy;
-import {getTestBed, inject, tick, TestBed, fakeAsync} from '@angular/core/testing';
+import {getTestBed, tick, TestBed, fakeAsync} from '@angular/core/testing';
 import {Subject, ReplaySubject} from 'rxjs';
 import {DeviceCategory, MidiMessage} from '../synthesizer/midi-message';
 import createSpyObj = jasmine.createSpyObj;

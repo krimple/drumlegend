@@ -5,7 +5,6 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 import { MidiMessage, MidiMessageType } from '../synthesizer/midi-message';
 import { SynthesizerService } from '../synthesizer/synthesizer.service';
-import { GamePlayMachine } from '../state-machine/game-play-machine';
 import { DrumMachineAndGameHolderService } from './drum-machine-and-game-holder.service';
 @Injectable()
 export class Mpk225Adapter extends DeviceAdapter {
